@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "ethers": "^6.1.0",
-    "lava-sdk": "github:lavanet/lava-sdk#d3a17d3181878cdab760dcd62404383386400e25"
+    "lava-sdk": "github:lavanet/lava-sdk#04383b055a0ef6518cb9bebfdf994a745e1a7a99"
   },
   "devDependencies": {
     "typescript": "^4.9.5",

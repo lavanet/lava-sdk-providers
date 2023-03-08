@@ -1,0 +1,21 @@
+{
+  "name": "lava-sdk-providers",
+  "version": "1.0.0",
+  "description": "Collection of Lava implementation for different providers",
+  "main": "./bin/index.js",
+  "types": "./bin/index.d.ts",
+  "author": "Lava Protocol Inc",
+  "license": "Apache-2.0",
+  "scripts": {
+    "tsc": "tsc",
+    "build": "yarn tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lavanet/lava-sdk-providers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lavanet/lava-sdk-providers/issues"
+  },
+  "homepage": "https://github.com/lavanet/lava-sdk-providers#readme"
+}
