@@ -10,6 +10,10 @@
     "tsc": "tsc",
     "build": "yarn tsc"
   },
+  "dependencies": {
+    "ethers": "^6.1.0",
+    "lava-sdk": "github:lavanet/lava-sdk#04383b055a0ef6518cb9bebfdf994a745e1a7a99"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lavanet/lava-sdk-providers.git"
