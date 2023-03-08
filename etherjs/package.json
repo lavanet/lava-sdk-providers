@@ -2,7 +2,7 @@
   "name": "lava_ether_provider",
   "version": "1.0.0",
   "description": "Lava implementation of ether.js provider",
-  "main": "./bin/src/provider/lavaEtherProvider.d.ts",
+  "main": "./bin/src/index.d.ts",
   "author": "Lava Protocol Inc",
   "license": "Apache-2.0",
   "scripts": {
