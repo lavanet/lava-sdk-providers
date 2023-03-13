@@ -150,18 +150,21 @@ export class LavaEtherProvider extends AbstractProvider {
   }
 
   async fetch(method: string, params: Array<any>): Promise<any> {
-    // TODO
+    // make sure lavaSDK was initialized
     if (this.lavaSDK == null) {
-      throw console.error("test");
+      throw new Error("Lava SDK not initialized");
     }
 
+    // send relay using lavaSDK
     const response = await this.lavaSDK.sendRelay({
       method: method,
       params: params,
     });
 
+    // parse response
     const parsedResponse = JSON.parse(response);
 
+    // return result
     return parsedResponse.result;
   }
 
@@ -207,7 +210,7 @@ export class LavaEtherProvider extends AbstractProvider {
     return result;
   }
 
-  // TODO need to be fixed
+  // Return initialized network
   async _detectNetwork(): Promise<Network> {
     return this.network;
   }
