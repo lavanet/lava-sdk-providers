@@ -25,7 +25,6 @@ class LavaEthersProvider extends ethers_1.AbstractProvider {
         if (options.networkId == undefined) {
             options.networkId = (0, utils_1.fetchNetworkID)(options.chainID);
         }
-        console.log(options.networkId);
         this.network = new ethers_1.Network(options.chainID, options.networkId);
         this.lavaSDK = null;
         return (() => __awaiter(this, void 0, void 0, function* () {
