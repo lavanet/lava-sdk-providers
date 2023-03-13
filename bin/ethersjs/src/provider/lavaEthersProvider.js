@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LavaEthersProvider = void 0;
 const ethers_1 = require("ethers");
 const lava_sdk_1 = require("lava-sdk");
+const utils_1 = require("../util/utils");
 function getLowerCase(value) {
     if (value) {
         return value.toLowerCase();
@@ -21,6 +22,10 @@ function getLowerCase(value) {
 class LavaEthersProvider extends ethers_1.AbstractProvider {
     constructor(options) {
         super();
+        if (options.networkId == undefined) {
+            options.networkId = (0, utils_1.fetchNetworkID)(options.chainID);
+        }
+        console.log(options.networkId);
         this.network = new ethers_1.Network(options.chainID, options.networkId);
         this.lavaSDK = null;
         return (() => __awaiter(this, void 0, void 0, function* () {
