@@ -1,1 +1,1 @@
-export * from "./etherjs/src/index";
+export * from "./ethersjs/src/index";

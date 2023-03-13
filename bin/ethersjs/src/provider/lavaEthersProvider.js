@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LavaEtherProvider = void 0;
+exports.LavaEthersProvider = void 0;
 const ethers_1 = require("ethers");
 const lava_sdk_1 = require("lava-sdk");
 function getLowerCase(value) {
@@ -18,7 +18,7 @@ function getLowerCase(value) {
     }
     return value;
 }
-class LavaEtherProvider extends ethers_1.AbstractProvider {
+class LavaEthersProvider extends ethers_1.AbstractProvider {
     constructor(options) {
         super();
         this.network = new ethers_1.Network(options.chainID, options.networkId);
@@ -115,15 +115,18 @@ class LavaEtherProvider extends ethers_1.AbstractProvider {
     }
     fetch(method, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            // TODO
+            // make sure lavaSDK was initialized
             if (this.lavaSDK == null) {
-                throw console.error("test");
+                throw new Error("Lava SDK not initialized");
             }
+            // send relay using lavaSDK
             const response = yield this.lavaSDK.sendRelay({
                 method: method,
                 params: params,
             });
+            // parse response
             const parsedResponse = JSON.parse(response);
+            // return result
             return parsedResponse.result;
         });
     }
@@ -162,11 +165,11 @@ class LavaEtherProvider extends ethers_1.AbstractProvider {
         }
         return result;
     }
-    // TODO need to be fixed
+    // Return initialized network
     _detectNetwork() {
         return __awaiter(this, void 0, void 0, function* () {
             return this.network;
         });
     }
 }
-exports.LavaEtherProvider = LavaEtherProvider;
+exports.LavaEthersProvider = LavaEthersProvider;
