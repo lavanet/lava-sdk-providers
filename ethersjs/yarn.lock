@@ -2622,9 +2622,9 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
-"lava-sdk@github:lavanet/lava-sdk#04383b055a0ef6518cb9bebfdf994a745e1a7a99":
+"lava-sdk@github:lavanet/lava-sdk#main":
   version "1.0.0"
-  resolved "git+ssh://git@github.com/lavanet/lava-sdk.git#04383b055a0ef6518cb9bebfdf994a745e1a7a99"
+  resolved "git+ssh://git@github.com/lavanet/lava-sdk.git#4068fec4228819a5284aeae5055338134efdb1b8"
   dependencies:
     "@cosmjs/amino" "^0.29.4"
     "@cosmjs/crypto" "^0.29.4"
