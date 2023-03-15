@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Celo Alfajores Testnet",
+    "chainID": "ALFAJORES",
+    "networkID": 44787
+  },
+  {
+    "name": "Arbitrum mainnet",
+    "chainID": "ARB1",
+    "networkID": 42161
+  },
+  {
+    "name": "Arbitrum Nova testnet",
+    "chainID": "ARBN",
+    "networkID": 42170
+  },
+  {
+    "name": "Base goerli testnet",
+    "chainID": "BASET",
+    "networkID": 84531
+  },
+  {
+    "name": "BSC mainnet",
+    "chainID": "BSC",
+    "networkID": 56
+  },
+  {
+    "name": "BSC testnet",
+    "chainID": "BSCT",
+    "networkID": 97
+  },
+  {
+    "name": "Canto mainnet",
+    "chainID": "CANTO",
+    "networkID": 7700
+  },
+  {
+    "name": "Celo Mainnet",
+    "chainID": "CELO",
+    "networkID": 42220
+  },
+  {
+    "name": "Ethereum Mainnet",
+    "chainID": "ETH1",
+    "networkID": 1
+  },
+  {
+    "name": "Evmos mainnet",
+    "chainID": "EVMOS",
+    "networkID": 9001
+  },
+  {
+    "name": "Evmos testnet",
+    "chainID": "EVMOST",
+    "networkID": 9000
+  },
+  {
+    "name": "Fantom Mainnet",
+    "chainID": "FTM250",
+    "networkID": 250
+  },
+  {
+    "name": "Fantom Testnet",
+    "chainID": "FTM4002",
+    "networkID": 4002
+  },
+  {
+    "name": "Goerli Testnet",
+    "chainID": "GTH1",
+    "networkID": 5
+  },
+  {
+    "name": "Optimism mainnet",
+    "chainID": "OPTM",
+    "networkID": 10
+  },
+  {
+    "name": "Optimism goerli testnet",
+    "chainID": "OPTMT",
+    "networkID": 420
+  },
+  {
+    "name": "Polygon Mainnet",
+    "chainID": "POLYGON1",
+    "networkID": 137
+  },
+  {
+    "name": "Polygon testnet",
+    "chainID": "POLYGON1T",
+    "networkID": 80001
+  }
+]
