@@ -47,13 +47,13 @@ Need help? We've got you covered 😻 Head over to our [Discord](https://discord
 ### Yarn
 
 ```bash
-yarn add lava-sdk-providers
+yarn add @lavanet/lava-sdk-providers
 ```
 
 ### NPM
 
 ```bash
-npm install lava-sdk-providers
+npm install @lavanet/lava-sdk-providers
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
