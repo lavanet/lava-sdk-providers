@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LavaEthersProvider = void 0;
 const ethers_1 = require("ethers");
-const lava_sdk_1 = require("lava-sdk");
+const lava_sdk_1 = require("@lavanet/lava-sdk");
 const utils_1 = require("../util/utils");
 function getLowerCase(value) {
     if (value) {

@@ -12,7 +12,7 @@ import {
   TransactionRequest,
   JsonRpcTransactionRequest,
 } from "ethers/types/providers";
-import { LavaSDK } from "lava-sdk";
+import { LavaSDK } from "@lavanet/lava-sdk";
 
 import { fetchNetworkID } from "../util/utils";
 
