@@ -1,6 +1,6 @@
 {
   "name": "lava-sdk-providers",
-  "version": "1.0.0",
+  "version": "0.8.2",
   "description": "Collection of Lava implementation for different providers",
   "main": "./bin/index.js",
   "types": "./bin/index.d.ts",
