@@ -1,6 +1,6 @@
 {
   "name": "@lavanet/lava-sdk-providers",
-  "version": "0.8.2.1",
+  "version": "0.8.3",
   "description": "Collection of Lava implementation for different providers",
   "main": "./bin/index.js",
   "types": "./bin/index.d.ts",
