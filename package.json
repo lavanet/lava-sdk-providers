@@ -11,7 +11,7 @@
     "build": "yarn tsc"
   },
   "dependencies": {
-    "@lavanet/lava-sdk": "^0.8.1",
+    "@lavanet/lava-sdk": "0.8.2",
     "ethers": "^6.1.0"
   },
   "repository": {
