@@ -32,6 +32,7 @@ class LavaEthersProvider extends ethers_1.AbstractProvider {
                 privateKey: options.privKey,
                 chainID: options.chainID,
                 pairingListConfig: options.pairingListConfig,
+                geolocation: options.geolocation,
             });
             return this;
         }))();
