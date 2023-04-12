@@ -164,16 +164,30 @@ export class LavaEthersProvider extends AbstractProvider {
     }
 
     // send relay using lavaSDK
-    const response = await this.lavaSDK.sendRelay({
-      method: method,
-      params: params,
-    });
+    try {
+      const response = await this.lavaSDK.sendRelay({
+        method: method,
+        params: params,
+      });
 
-    // parse response
-    const parsedResponse = JSON.parse(response);
+      // parse response
+      const parsedResponse = JSON.parse(response);
 
-    // return result
-    return parsedResponse.result;
+      // return result
+      if (parsedResponse.result != undefined) {
+        return parsedResponse.result;
+      }
+
+      if (parsedResponse.error.message != undefined) {
+        throw new Error(parsedResponse.error.message);
+      }
+
+      // Log response if we are not handling it
+      console.log(parsedResponse);
+      throw new Error("Unhlendled response");
+    } catch (err) {
+      throw err;
+    }
   }
 
   getRpcTransaction(tx: TransactionRequest): JsonRpcTransactionRequest {
