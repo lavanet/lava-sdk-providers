@@ -33,8 +33,8 @@
     "providers"
   ],
   "exports": {
-    ".": "./bin/index.js",
-    "./ethers/v5": "./bin/ethersjs/v5.js",
-    "./ethers/v6": "./bin/ethersjs/v6.js"
+    ".": "./index.js",
+    "./ethers/v5": "./ethersjs/v5/bin/src/provider/lavaEthersProvider.js",
+    "./ethers/v6": "./ethersjs/v6/bin/src/provider/lavaEthersProvider.js"
   }
 }
