@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@lavanet/lava-sdk": "0.8.2",
-    "ethers": "5.7.2"
+    "ethers-v5": "npm:ethers@5.7.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.0.0",

@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LavaEthersProvider = void 0;
-const ethers_1 = require("ethers");
+const ethers_v5_1 = require("ethers-v5");
 const networks_1 = require("@ethersproject/networks");
-const { BaseProvider } = ethers_1.providers;
-const { hexlify, hexValue, accessListify } = ethers_1.utils;
+const { BaseProvider } = ethers_v5_1.providers;
+const { hexlify, hexValue, accessListify } = ethers_v5_1.utils;
 const lava_sdk_1 = require("@lavanet/lava-sdk");
 const utils_1 = require("../util/utils");
 function getLowerCase(value) {

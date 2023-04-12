@@ -1,4 +1,4 @@
-import { providers, utils } from "ethers";
+import { providers, utils } from "ethers-v5";
 import { Network, getNetwork } from "@ethersproject/networks";
 import { TransactionRequest } from "@ethersproject/abstract-provider";
 

@@ -1,4 +1,4 @@
-import { providers } from "ethers";
+import { providers } from "ethers-v5";
 import { Network } from "@ethersproject/networks";
 import { TransactionRequest } from "@ethersproject/abstract-provider";
 declare const BaseProvider: typeof providers.BaseProvider;
