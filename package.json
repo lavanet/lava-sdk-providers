@@ -10,10 +10,6 @@
     "tsc": "tsc",
     "build": "yarn tsc"
   },
-  "dependencies": {
-    "@lavanet/lava-sdk": "0.8.2",
-    "ethers": "^6.1.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lavanet/lava-sdk-providers.git"
@@ -35,5 +31,10 @@
     "decentralized",
     "rpc",
     "providers"
-  ]
+  ],
+  "exports": {
+    ".": "./bin/index.js",
+    "./ethers/v5": "./bin/ethersjs/v5.js",
+    "./ethers/v6": "./bin/ethersjs/v6.js"
+  }
 }
