@@ -32,6 +32,7 @@ class LavaEthersProvider extends ethers_1.AbstractProvider {
                 privateKey: options.privKey,
                 chainID: options.chainID,
                 pairingListConfig: options.pairingListConfig,
+                geolocation: options.geolocation,
             });
             return this;
         }))();
@@ -124,14 +125,26 @@ class LavaEthersProvider extends ethers_1.AbstractProvider {
                 throw new Error("Lava SDK not initialized");
             }
             // send relay using lavaSDK
-            const response = yield this.lavaSDK.sendRelay({
-                method: method,
-                params: params,
-            });
-            // parse response
-            const parsedResponse = JSON.parse(response);
-            // return result
-            return parsedResponse.result;
+            try {
+                const response = yield this.lavaSDK.sendRelay({
+                    method: method,
+                    params: params,
+                });
+                // parse response
+                const parsedResponse = JSON.parse(response);
+                // return result
+                if (parsedResponse.result != undefined) {
+                    return parsedResponse.result;
+                }
+                if (parsedResponse.error.message != undefined) {
+                    throw new Error(parsedResponse.error.message);
+                }
+                // Log response if we are not handling it
+                throw new Error("Unhlendled response");
+            }
+            catch (err) {
+                throw err;
+            }
         });
     }
     getRpcTransaction(tx) {
