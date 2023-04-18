@@ -1,0 +1,26 @@
+{
+  "name": "lava_ether_provider",
+  "version": "1.0.0",
+  "description": "Lava implementation of ether.js provider",
+  "main": "./bin/src/index.js",
+  "types": "./bin/src/index.d.ts",
+  "author": "Lava Protocol Inc",
+  "license": "Apache-2.0",
+  "scripts": {
+    "tsc": "tsc",
+    "build": "yarn tsc",
+    "prettier": "prettier --check .",
+    "lint": "eslint '**/*.ts'"
+  },
+  "dependencies": {
+    "@lavanet/lava-sdk": "0.8.2",
+    "ethers-v5": "npm:ethers@5.7.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.1.0",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.5"
+  }
+}

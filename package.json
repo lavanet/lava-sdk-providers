@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@lavanet/lava-sdk": "0.8.2",
-    "ethers": "^6.1.0"
+    "ethers": "^6.1.0",
+    "ethers-v5": "npm:ethers@5.7.2"
   },
   "repository": {
     "type": "git",
@@ -35,5 +36,10 @@
     "decentralized",
     "rpc",
     "providers"
-  ]
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./ethers/v5": "./ethersjs/v5/bin/src/provider/lavaEthersProvider.js",
+    "./ethers/v6": "./ethersjs/v6/bin/src/provider/lavaEthersProvider.js"
+  }
 }

@@ -48,7 +48,22 @@ npm install lava-sdk-providers
 
 ## Usage
 
-To use the LavaEthersProvider, you will first need to import and initialize it.
+### Importing the LavaEthersProvider
+
+The LavaEthersProvider supports multiple versions. We support version 5.x and the latest version, which is version 6.x. If a user wants to import, this is how to do it:
+
+```typescript
+Copy code
+import { LavaEthersProvider } from "lava-sdk-provider"; // for version 6 (default)
+import { LavaEthersProvider } from "lava-sdk-provider/ethers/v5"; // for version 5
+import { LavaEthersProvider } from "lava-sdk-provider/ethers/v6"; // for version 6
+```
+
+By default, version 6 is imported, but you can specify which one you want to add.
+
+### Initializing the LavaEthersProvider
+
+To use the LavaEthersProvider, you will first need to initialize it.
 
 ```typescript
 const ethersProvider = await new LavaEthersProvider({
@@ -56,6 +71,7 @@ const ethersProvider = await new LavaEthersProvider({
   chainID: chainID,
   pairingListConfig: localConfigPath, // Optional
   networkId: networkID, // Optional
+  geolocation: geolocation, //Optional
 });
 ```
 
@@ -66,6 +82,8 @@ const ethersProvider = await new LavaEthersProvider({
 - `pairingListConfig` is an optional field that specifies the lava pairing list config used for communicating with lava network. Lava SDK does not rely on one centralized rpc for querying lava network. It uses a list of rpc providers to fetch list of the providers for specified `chainID` and `rpcInterface` from lava network. If not pairingListConfig set, the default list will be used [default lava pairing list](https://github.com/lavanet/lava-providers/blob/main/pairingList.json)
 
 - `networkId` represents chain id of the network we want to query. By default every supported chain has matching chain id (https://github.com/lavanet/lava-sdk-providers/blob/main/ethersjs/supportedChains.json)
+
+- `geolocation` is an optional field that specifies the geolocation which will be used. Default value is 1 which represents North America providers. Besides North America providers, lava supports EU providers on geolocation 2.
 
 Once the LavaEthersProvider is initialized, you can use any method provided by the Ether.js library to interact with the blockchain. For example, to get the latest block number, you can use the following code:
 

@@ -183,7 +183,6 @@ export class LavaEthersProvider extends AbstractProvider {
       }
 
       // Log response if we are not handling it
-      console.log(parsedResponse);
       throw new Error("Unhlendled response");
     } catch (err) {
       throw err;

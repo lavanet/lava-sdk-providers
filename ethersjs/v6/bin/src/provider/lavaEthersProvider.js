@@ -11,7 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LavaEthersProvider = void 0;
 const ethers_1 = require("ethers");
-const lava_sdk_1 = require("lava-sdk");
+const lava_sdk_1 = require("@lavanet/lava-sdk");
+const utils_1 = require("../util/utils");
 function getLowerCase(value) {
     if (value) {
         return value.toLowerCase();
@@ -21,6 +22,9 @@ function getLowerCase(value) {
 class LavaEthersProvider extends ethers_1.AbstractProvider {
     constructor(options) {
         super();
+        if (options.networkId == undefined) {
+            options.networkId = (0, utils_1.fetchNetworkID)(options.chainID);
+        }
         this.network = new ethers_1.Network(options.chainID, options.networkId);
         this.lavaSDK = null;
         return (() => __awaiter(this, void 0, void 0, function* () {
@@ -28,6 +32,7 @@ class LavaEthersProvider extends ethers_1.AbstractProvider {
                 privateKey: options.privKey,
                 chainID: options.chainID,
                 pairingListConfig: options.pairingListConfig,
+                geolocation: options.geolocation,
             });
             return this;
         }))();
@@ -120,14 +125,26 @@ class LavaEthersProvider extends ethers_1.AbstractProvider {
                 throw new Error("Lava SDK not initialized");
             }
             // send relay using lavaSDK
-            const response = yield this.lavaSDK.sendRelay({
-                method: method,
-                params: params,
-            });
-            // parse response
-            const parsedResponse = JSON.parse(response);
-            // return result
-            return parsedResponse.result;
+            try {
+                const response = yield this.lavaSDK.sendRelay({
+                    method: method,
+                    params: params,
+                });
+                // parse response
+                const parsedResponse = JSON.parse(response);
+                // return result
+                if (parsedResponse.result != undefined) {
+                    return parsedResponse.result;
+                }
+                if (parsedResponse.error.message != undefined) {
+                    throw new Error(parsedResponse.error.message);
+                }
+                // Log response if we are not handling it
+                throw new Error("Unhlendled response");
+            }
+            catch (err) {
+                throw err;
+            }
         });
     }
     getRpcTransaction(tx) {
