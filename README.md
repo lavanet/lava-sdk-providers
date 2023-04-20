@@ -64,7 +64,7 @@ npm install @lavanet/lava-sdk-providers
 
 For each provider implementation, there is a separate readme file on how to use it. Below are the available provider implementations along with a link to their respective readme file:
 
-1. [Ethers.js](https://github.com/lavanet/lava-sdk-providers/ethersjs/README.md)
+1. [Ethers.js](https://github.com/lavanet/lava-sdk-providers/blob/main/ethersjs/README.md)
 
 Make sure to follow the instructions in the respective readme file to properly configure and use the provider implementation.
 
