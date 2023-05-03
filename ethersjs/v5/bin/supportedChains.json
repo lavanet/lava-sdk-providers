@@ -1,5 +1,10 @@
 [
     {
+        "name": "Avalanche mainnet",
+        "chainID": "AVAX",
+        "networkID": 43114
+    },
+    {
         "name": "Celo Alfajores Testnet",
         "chainID": "ALFAJORES",
         "networkID": 44787
