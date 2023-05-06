@@ -13,7 +13,7 @@
     "lint": "eslint '**/*.ts'"
   },
   "dependencies": {
-    "@lavanet/lava-sdk": "0.9.0",
+    "@lavanet/lava-sdk": "0.10.2",
     "ethers-v5": "npm:ethers@5.7.2"
   },
   "devDependencies": {
