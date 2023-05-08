@@ -39,7 +39,7 @@
   ],
   "exports": {
     ".": "./index.js",
-    "./ethers/v5": "./ethersjs/v5/bin/src/provider/lavaEthersProvider.js",
-    "./ethers/v6": "./ethersjs/v6/bin/src/provider/lavaEthersProvider.js"
+    "./ethers/v5": "./ethersjs/v5/bin/lavaEthersProvider.js",
+    "./ethers/v6": "./ethersjs/v6/bin/lavaEthersProvider.js"
   }
 }
