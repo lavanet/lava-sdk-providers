@@ -14,8 +14,6 @@ import {
 } from "ethers/types/providers";
 import { LavaSDK } from "@lavanet/lava-sdk";
 
-import { fetchNetworkID } from "../util/utils";
-
 interface SendRelayOptions {
   chainID: string;
   privKey: string;
@@ -33,16 +31,12 @@ function getLowerCase(value: string): string {
 
 export class LavaEthersProvider extends AbstractProvider {
   private lavaSDK: LavaSDK | null;
-  private network!: Network;
+  private network: Network | null;
 
   constructor(options: SendRelayOptions) {
     super();
 
-    if (options.networkId == undefined) {
-      options.networkId = fetchNetworkID(options.chainID);
-    }
-
-    this.network = new Network(options.chainID, options.networkId);
+    this.network = null;
     this.lavaSDK = null;
 
     return (async (): Promise<LavaEthersProvider> => {
@@ -52,6 +46,19 @@ export class LavaEthersProvider extends AbstractProvider {
         pairingListConfig: options.pairingListConfig,
         geolocation: options.geolocation,
       });
+
+      if (options.networkId == undefined) {
+        // fetch chain id from the provider
+        const response = await this.lavaSDK.sendRelay({
+          method: "eth_chainId",
+          params: [],
+        });
+
+        options.networkId = JSON.parse(response).result as number;
+        console.log(options.networkId);
+      }
+
+      this.network = new Network(options.chainID, options.networkId);
 
       return this;
     })() as unknown as LavaEthersProvider;
@@ -183,7 +190,7 @@ export class LavaEthersProvider extends AbstractProvider {
       }
 
       // Log response if we are not handling it
-      throw new Error("Unhlendled response");
+      throw new Error("Unhandled response");
     } catch (err) {
       throw err;
     }
@@ -233,6 +240,9 @@ export class LavaEthersProvider extends AbstractProvider {
 
   // Return initialized network
   async _detectNetwork(): Promise<Network> {
+    if (this.network == null) {
+      throw new Error("Network not defined");
+    }
     return this.network;
   }
 }

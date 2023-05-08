@@ -7,8 +7,6 @@ const { hexlify, hexValue, accessListify } = utils;
 
 import { LavaSDK } from "@lavanet/lava-sdk";
 
-import { fetchNetworkID } from "../util/utils";
-
 interface SendRelayOptions {
   chainID: string;
   privKey: string;
@@ -28,15 +26,12 @@ export class LavaEthersProvider extends BaseProvider {
   private lavaSDK: LavaSDK | null;
 
   constructor(options: SendRelayOptions) {
-    if (options.networkId == undefined) {
-      options.networkId = fetchNetworkID(options.chainID);
-    }
-
+    // Create dummy network to init base constructor
+    // network will be overriten later in this method
     const network = getNetwork({
-      name: options.chainID,
-      chainId: options.networkId,
+      name: "",
+      chainId: 1,
     });
-
     super(network);
 
     this.lavaSDK = null;
@@ -48,6 +43,24 @@ export class LavaEthersProvider extends BaseProvider {
         pairingListConfig: options.pairingListConfig,
         geolocation: options.geolocation,
       });
+
+      if (options.networkId == undefined) {
+        // fetch chain id from the provider
+        const response = await this.lavaSDK.sendRelay({
+          method: "eth_chainId",
+          params: [],
+        });
+
+        options.networkId = JSON.parse(response).result as number;
+        console.log(options.networkId);
+      }
+
+      const network = getNetwork({
+        name: options.chainID,
+        chainId: options.networkId,
+      });
+
+      this._network = network;
 
       return this;
     })() as unknown as LavaEthersProvider;
