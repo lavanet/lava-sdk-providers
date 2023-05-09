@@ -23,37 +23,46 @@ function getLowerCase(value) {
 }
 class LavaEthersProvider extends BaseProvider {
     constructor(options) {
-        // Create dummy network to init base constructor
-        // network will be overriten later in this method
-        const network = (0, networks_1.getNetwork)({
-            name: "",
-            chainId: 1,
-        });
-        super(network);
+        const networkPromise = LavaEthersProvider.getNetworkPromise(options);
+        super(networkPromise);
         this.lavaSDK = null;
-        return (() => __awaiter(this, void 0, void 0, function* () {
+        (() => __awaiter(this, void 0, void 0, function* () {
             this.lavaSDK = yield new lava_sdk_1.LavaSDK({
                 privateKey: options.privKey,
                 chainID: options.chainID,
                 pairingListConfig: options.pairingListConfig,
                 geolocation: options.geolocation,
             });
-            if (options.networkId == undefined) {
-                // fetch chain id from the provider
-                const response = yield this.lavaSDK.sendRelay({
+        }))();
+    }
+    static getNetworkPromise(options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (options.networkId) {
+                const network = (0, networks_1.getNetwork)({
+                    name: options.chainID,
+                    chainId: options.networkId,
+                });
+                return Promise.resolve(network);
+            }
+            else {
+                const lavaSDK = yield new lava_sdk_1.LavaSDK({
+                    privateKey: options.privKey,
+                    chainID: options.chainID,
+                    pairingListConfig: options.pairingListConfig,
+                    geolocation: options.geolocation,
+                });
+                const response = yield lavaSDK.sendRelay({
                     method: "eth_chainId",
                     params: [],
                 });
-                options.networkId = JSON.parse(response).result;
-                console.log(options.networkId);
+                const networkId = parseInt(JSON.parse(response).result, 16);
+                const network = (0, networks_1.getNetwork)({
+                    name: options.chainID,
+                    chainId: networkId,
+                });
+                return network;
             }
-            const network = (0, networks_1.getNetwork)({
-                name: options.chainID,
-                chainId: options.networkId,
-            });
-            this._network = network;
-            return this;
-        }))();
+        });
     }
     perform(method, params) {
         return __awaiter(this, void 0, void 0, function* () {

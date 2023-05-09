@@ -26,44 +26,49 @@ export class LavaEthersProvider extends BaseProvider {
   private lavaSDK: LavaSDK | null;
 
   constructor(options: SendRelayOptions) {
-    // Create dummy network to init base constructor
-    // network will be overriten later in this method
-    const network = getNetwork({
-      name: "",
-      chainId: 1,
-    });
-    super(network);
-
+    const networkPromise = LavaEthersProvider.getNetworkPromise(options);
+    super(networkPromise);
     this.lavaSDK = null;
 
-    return (async (): Promise<LavaEthersProvider> => {
+    (async () => {
       this.lavaSDK = await new LavaSDK({
         privateKey: options.privKey,
         chainID: options.chainID,
         pairingListConfig: options.pairingListConfig,
         geolocation: options.geolocation,
       });
+    })();
+  }
 
-      if (options.networkId == undefined) {
-        // fetch chain id from the provider
-        const response = await this.lavaSDK.sendRelay({
-          method: "eth_chainId",
-          params: [],
-        });
-
-        options.networkId = JSON.parse(response).result as number;
-        console.log(options.networkId);
-      }
-
+  private static async getNetworkPromise(
+    options: SendRelayOptions
+  ): Promise<Network> {
+    if (options.networkId) {
       const network = getNetwork({
         name: options.chainID,
         chainId: options.networkId,
       });
+      return Promise.resolve(network);
+    } else {
+      const lavaSDK = await new LavaSDK({
+        privateKey: options.privKey,
+        chainID: options.chainID,
+        pairingListConfig: options.pairingListConfig,
+        geolocation: options.geolocation,
+      });
 
-      this._network = network;
+      const response = await lavaSDK.sendRelay({
+        method: "eth_chainId",
+        params: [],
+      });
 
-      return this;
-    })() as unknown as LavaEthersProvider;
+      const networkId = parseInt(JSON.parse(response).result, 16);
+      const network = getNetwork({
+        name: options.chainID,
+        chainId: networkId,
+      });
+      return network;
+    }
   }
 
   async perform(method: string, params: any): Promise<any> {
