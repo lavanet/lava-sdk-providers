@@ -55,7 +55,6 @@ export class LavaEthersProvider extends AbstractProvider {
         });
 
         options.networkId = JSON.parse(response).result as number;
-        console.log(options.networkId);
       }
 
       this.network = new Network(options.chainID, options.networkId);

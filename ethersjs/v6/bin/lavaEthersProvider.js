@@ -37,7 +37,6 @@ class LavaEthersProvider extends ethers_1.AbstractProvider {
                     params: [],
                 });
                 options.networkId = JSON.parse(response).result;
-                console.log(options.networkId);
             }
             this.network = new ethers_1.Network(options.chainID, options.networkId);
             return this;
