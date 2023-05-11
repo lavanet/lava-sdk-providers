@@ -8,6 +8,7 @@ interface SendRelayOptions {
     pairingListConfig?: string;
     networkId?: number;
     geolocation?: string;
+    lavaChainId?: string;
 }
 export declare class LavaEthersProvider extends BaseProvider {
     private lavaSDK;

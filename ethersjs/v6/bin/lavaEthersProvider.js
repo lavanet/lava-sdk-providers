@@ -29,6 +29,7 @@ class LavaEthersProvider extends ethers_1.AbstractProvider {
                 chainID: options.chainID,
                 pairingListConfig: options.pairingListConfig,
                 geolocation: options.geolocation,
+                lavaChainId: options.lavaChainId,
             });
             if (options.networkId == undefined) {
                 // fetch chain id from the provider

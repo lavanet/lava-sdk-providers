@@ -32,6 +32,7 @@ class LavaEthersProvider extends BaseProvider {
                 chainID: options.chainID,
                 pairingListConfig: options.pairingListConfig,
                 geolocation: options.geolocation,
+                lavaChainId: options.lavaChainId,
             });
         }))();
     }

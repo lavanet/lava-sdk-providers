@@ -20,6 +20,7 @@ interface SendRelayOptions {
   pairingListConfig?: string;
   networkId?: number;
   geolocation?: string;
+  lavaChainId?: string;
 }
 
 function getLowerCase(value: string): string {
@@ -45,6 +46,7 @@ export class LavaEthersProvider extends AbstractProvider {
         chainID: options.chainID,
         pairingListConfig: options.pairingListConfig,
         geolocation: options.geolocation,
+        lavaChainId: options.lavaChainId,
       });
 
       if (options.networkId == undefined) {
