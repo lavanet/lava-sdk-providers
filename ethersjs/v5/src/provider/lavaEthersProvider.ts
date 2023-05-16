@@ -7,8 +7,6 @@ const { hexlify, hexValue, accessListify } = utils;
 
 import { LavaSDK } from "@lavanet/lava-sdk";
 
-import { fetchNetworkID } from "../util/utils";
-
 interface SendRelayOptions {
   chainID: string;
   privKey: string;
@@ -29,20 +27,11 @@ export class LavaEthersProvider extends BaseProvider {
   private lavaSDK: LavaSDK | null;
 
   constructor(options: SendRelayOptions) {
-    if (options.networkId == undefined) {
-      options.networkId = fetchNetworkID(options.chainID);
-    }
-
-    const network = getNetwork({
-      name: options.chainID,
-      chainId: options.networkId,
-    });
-
-    super(network);
-
+    const networkPromise = LavaEthersProvider.getNetworkPromise(options);
+    super(networkPromise);
     this.lavaSDK = null;
 
-    return (async (): Promise<LavaEthersProvider> => {
+    (async () => {
       this.lavaSDK = await new LavaSDK({
         privateKey: options.privKey,
         chainID: options.chainID,
@@ -50,9 +39,38 @@ export class LavaEthersProvider extends BaseProvider {
         geolocation: options.geolocation,
         lavaChainId: options.lavaChainId,
       });
+    })();
+  }
 
-      return this;
-    })() as unknown as LavaEthersProvider;
+  private static async getNetworkPromise(
+    options: SendRelayOptions
+  ): Promise<Network> {
+    if (options.networkId) {
+      const network = getNetwork({
+        name: options.chainID,
+        chainId: options.networkId,
+      });
+      return Promise.resolve(network);
+    } else {
+      const lavaSDK = await new LavaSDK({
+        privateKey: options.privKey,
+        chainID: options.chainID,
+        pairingListConfig: options.pairingListConfig,
+        geolocation: options.geolocation,
+      });
+
+      const response = await lavaSDK.sendRelay({
+        method: "eth_chainId",
+        params: [],
+      });
+
+      const networkId = parseInt(JSON.parse(response).result, 16);
+      const network = getNetwork({
+        name: options.chainID,
+        chainId: networkId,
+      });
+      return network;
+    }
   }
 
   async perform(method: string, params: any): Promise<any> {

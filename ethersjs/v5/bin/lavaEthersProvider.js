@@ -10,24 +10,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LavaEthersProvider = void 0;
-const ethers_1 = require("ethers");
+const ethers_v5_1 = require("ethers-v5");
+const networks_1 = require("@ethersproject/networks");
+const { BaseProvider } = ethers_v5_1.providers;
+const { hexlify, hexValue, accessListify } = ethers_v5_1.utils;
 const lava_sdk_1 = require("@lavanet/lava-sdk");
-const utils_1 = require("../util/utils");
 function getLowerCase(value) {
     if (value) {
         return value.toLowerCase();
     }
     return value;
 }
-class LavaEthersProvider extends ethers_1.AbstractProvider {
+class LavaEthersProvider extends BaseProvider {
     constructor(options) {
-        super();
-        if (options.networkId == undefined) {
-            options.networkId = (0, utils_1.fetchNetworkID)(options.chainID);
-        }
-        this.network = new ethers_1.Network(options.chainID, options.networkId);
+        const networkPromise = LavaEthersProvider.getNetworkPromise(options);
+        super(networkPromise);
         this.lavaSDK = null;
-        return (() => __awaiter(this, void 0, void 0, function* () {
+        (() => __awaiter(this, void 0, void 0, function* () {
             this.lavaSDK = yield new lava_sdk_1.LavaSDK({
                 privateKey: options.privKey,
                 chainID: options.chainID,
@@ -35,84 +34,112 @@ class LavaEthersProvider extends ethers_1.AbstractProvider {
                 geolocation: options.geolocation,
                 lavaChainId: options.lavaChainId,
             });
-            return this;
         }))();
     }
-    _perform(req) {
+    static getNetworkPromise(options) {
         return __awaiter(this, void 0, void 0, function* () {
-            switch (req.method) {
+            if (options.networkId) {
+                const network = (0, networks_1.getNetwork)({
+                    name: options.chainID,
+                    chainId: options.networkId,
+                });
+                return Promise.resolve(network);
+            }
+            else {
+                const lavaSDK = yield new lava_sdk_1.LavaSDK({
+                    privateKey: options.privKey,
+                    chainID: options.chainID,
+                    pairingListConfig: options.pairingListConfig,
+                    geolocation: options.geolocation,
+                });
+                const response = yield lavaSDK.sendRelay({
+                    method: "eth_chainId",
+                    params: [],
+                });
+                const networkId = parseInt(JSON.parse(response).result, 16);
+                const network = (0, networks_1.getNetwork)({
+                    name: options.chainID,
+                    chainId: networkId,
+                });
+                return network;
+            }
+        });
+    }
+    perform(method, params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            switch (method) {
                 case "getBlockNumber": {
                     return this.fetch("eth_blockNumber", []);
                 }
+                case "getGasPrice": {
+                    return this.fetch("eth_gasPrice", []);
+                }
                 case "getBlock": {
-                    if ("blockTag" in req) {
-                        const blockNumber = typeof req.blockTag === "number"
-                            ? req.blockTag.toString()
-                            : req.blockTag;
+                    if (params.blockTag) {
+                        const blockNumber = typeof params.blockTag === "number"
+                            ? params.blockTag.toString()
+                            : params.blockTag;
                         return this.fetch("eth_getBlockByNumber", [
                             blockNumber,
-                            req.includeTransactions,
+                            params.includeTransactions,
                         ]);
                     }
-                    (0, ethers_1.assert)(false, "getBlock by blockHash not supported by Lava", "UNSUPPORTED_OPERATION", {
-                        operation: "getBlock(blockHash)",
-                    });
                 }
                 case "getTransaction": {
-                    return this.fetch("eth_getTransactionByHash", [req.hash]);
+                    return this.fetch("eth_getTransactionByHash", [params.hash]);
                 }
                 case "getTransactionReceipt": {
-                    return this.fetch("eth_getTransactionReceipt", [req.hash]);
+                    return this.fetch("eth_getTransactionReceipt", [params.hash]);
                 }
                 case "getTransactionCount": {
                     return this.fetch("eth_getTransactionCount", [
-                        req.address,
-                        req.blockTag,
+                        params.address,
+                        params.blockTag,
                     ]);
                 }
                 case "getBalance": {
-                    return this.fetch("eth_getBalance", [req.address, req.blockTag]);
+                    return this.fetch("eth_getBalance", [params.address, params.blockTag]);
                 }
                 case "getCode": {
-                    return this.fetch("eth_getCode", [req.address, req.blockTag]);
+                    return this.fetch("eth_getCode", [params.address, params.blockTag]);
                 }
                 case "getStorage": {
                     return this.fetch("eth_getStorageAt", [
-                        req.address,
-                        req.position,
-                        req.blockTag,
+                        params.address,
+                        params.position,
+                        params.blockTag,
                     ]);
                 }
                 case "getGasPrice": {
                     return this.fetch("eth_gasPrice", []);
                 }
                 case "broadcastTransaction": {
-                    return this.fetch("eth_sendRawTransaction", [req.signedTransaction]);
+                    return this.fetch("eth_sendRawTransaction", [params.signedTransaction]);
                 }
                 case "chainId": {
                     return this.fetch("eth_chainId", []);
                 }
                 case "call": {
                     return this.fetch("eth_call", [
-                        this.getRpcTransaction(req.transaction),
-                        req.blockTag,
+                        this.getTransactionPostData(params.transaction),
+                        params.blockTag,
                     ]);
                 }
                 case "estimateGas": {
                     return this.fetch("eth_estimateGas", [
-                        this.getRpcTransaction(req.transaction),
+                        this.getTransactionPostData(params.transaction),
                     ]);
                 }
                 case "getLogs": {
-                    if (req.filter && req.filter.address != null) {
-                        if (Array.isArray(req.filter.address)) {
-                            req.filter.address = req.filter.address.map(getLowerCase);
+                    if (params.filter && params.filter.address != null) {
+                        if (Array.isArray(params.filter.address)) {
+                            params.filter.address = params.filter.address.map(getLowerCase);
                         }
                         else {
-                            req.filter.address = getLowerCase(req.filter.address);
+                            params.filter.address = getLowerCase(params.filter.address);
                         }
                     }
-                    return this.fetch("eth_getLogs", [req.filter]);
+                    return this.fetch("eth_getLogs", [params.filter]);
                 }
                 default:
                     break;
@@ -148,43 +175,47 @@ class LavaEthersProvider extends ethers_1.AbstractProvider {
             }
         });
     }
-    getRpcTransaction(tx) {
+    getTransactionPostData(transaction) {
         const result = {};
-        // JSON-RPC now requires numeric values to be "quantity" values
-        [
-            "chainId",
-            "gasLimit",
-            "gasPrice",
-            "type",
-            "maxFeePerGas",
-            "maxPriorityFeePerGas",
-            "nonce",
-            "value",
-        ].forEach((key) => {
-            if (tx[key] == null) {
-                return;
+        for (let key in transaction) {
+            if (transaction[key] == null) {
+                continue;
             }
-            let dstKey = key;
-            if (key === "gasLimit") {
-                dstKey = "gas";
+            let value = transaction[key];
+            if (key === "type" && value === 0) {
+                continue;
             }
-            result[dstKey] = (0, ethers_1.toQuantity)((0, ethers_1.getBigInt)(tx[key], `tx.${key}`));
-        });
-        // Make sure addresses and data are lowercase
-        ["from", "to", "data"].forEach((key) => {
-            if (tx[key] == null) {
-                return;
+            // Quantity-types require no leading zero, unless 0
+            if ({
+                type: true,
+                gasLimit: true,
+                gasPrice: true,
+                maxFeePerGs: true,
+                maxPriorityFeePerGas: true,
+                nonce: true,
+                value: true,
+            }[key]) {
+                value = hexValue(hexlify(value));
             }
-            result[key] = (0, ethers_1.hexlify)(tx[key]);
-        });
-        // Normalize the access list object
-        if (tx.accessList) {
-            result["accessList"] = (0, ethers_1.accessListify)(tx.accessList);
+            else if (key === "accessList") {
+                value =
+                    "[" +
+                        accessListify(value)
+                            .map((set) => {
+                            return `{address:"${set.address}",storageKeys:["${set.storageKeys.join('","')}"]}`;
+                        })
+                            .join(",") +
+                        "]";
+            }
+            else {
+                value = hexlify(value);
+            }
+            result[key] = value;
         }
         return result;
     }
     // Return initialized network
-    _detectNetwork() {
+    detectNetwork() {
         return __awaiter(this, void 0, void 0, function* () {
             return this.network;
         });

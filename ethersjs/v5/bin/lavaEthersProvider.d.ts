@@ -13,6 +13,7 @@ interface SendRelayOptions {
 export declare class LavaEthersProvider extends BaseProvider {
     private lavaSDK;
     constructor(options: SendRelayOptions);
+    private static getNetworkPromise;
     perform(method: string, params: any): Promise<any>;
     fetch(method: string, params: Array<any>): Promise<any>;
     getTransactionPostData(transaction: TransactionRequest): Record<string, string>;
