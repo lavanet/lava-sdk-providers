@@ -1,6 +1,6 @@
 {
   "name": "@lavanet/lava-sdk-providers",
-  "version": "0.10.2",
+  "version": "0.13.1",
   "description": "Collection of Lava implementation for different providers",
   "main": "./bin/index.js",
   "types": "./bin/index.d.ts",
@@ -11,7 +11,7 @@
     "build": "yarn tsc"
   },
   "dependencies": {
-    "@lavanet/lava-sdk": "0.10.2",
+    "@lavanet/lava-sdk": "0.13.1",
     "ethers": "^6.1.0",
     "ethers-v5": "npm:ethers@5.7.2"
   },
