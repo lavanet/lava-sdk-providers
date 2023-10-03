@@ -1,0 +1,8 @@
+{
+  "name": "lava_web3_provider",
+  "version": "1.0.0",
+  "description": "Lava extension for web3js library",
+  "main": "./bin/src/index.js",
+  "author": "Lava Protocol Inc",
+  "license": "Apache-2.0"
+}
