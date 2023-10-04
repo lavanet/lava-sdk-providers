@@ -1,0 +1,32 @@
+import { LavaSDKOptions } from "@lavanet/lava-sdk";
+import { EthExecutionAPI, JsonRpcResponseWithResult, JsonRpcResult, ProviderConnectInfo, ProviderMessage, ProviderRpcError, Web3APIPayload, Web3BaseProvider, Web3Eip1193ProviderEventCallback, Web3ProviderEventCallback, Web3ProviderMessageEventCallback, Web3ProviderStatus } from "web3";
+export declare class LavaWeb3Provider extends Web3BaseProvider<EthExecutionAPI> {
+    private lavaSdk;
+    private lavaSdkOptions;
+    constructor(options: LavaSDKOptions);
+    static create(options: LavaSDKOptions): Promise<LavaWeb3Provider>;
+    init(): Promise<void>;
+    supportsSubscriptions(): boolean;
+    request<Method extends string, ResultType = unknown>(args: Web3APIPayload<EthExecutionAPI, Method>): Promise<JsonRpcResponseWithResult<ResultType>>;
+    getStatus(): Web3ProviderStatus;
+    on(type: "disconnect", listener: Web3Eip1193ProviderEventCallback<ProviderRpcError>): void;
+    on<T = JsonRpcResult>(type: string, listener: Web3Eip1193ProviderEventCallback<ProviderMessage> | Web3ProviderMessageEventCallback<T>): void;
+    on<T = JsonRpcResult>(type: string, listener: Web3Eip1193ProviderEventCallback<ProviderMessage> | Web3ProviderMessageEventCallback<T>): void;
+    on(type: "connect", listener: Web3Eip1193ProviderEventCallback<ProviderConnectInfo>): void;
+    on(type: "chainChanged", listener: Web3Eip1193ProviderEventCallback<string>): void;
+    on(type: "accountsChanged", listener: Web3Eip1193ProviderEventCallback<string[]>): void;
+    removeListener(type: "disconnect", listener: Web3Eip1193ProviderEventCallback<ProviderRpcError>): void;
+    removeListener<T = JsonRpcResult>(type: string, listener: Web3Eip1193ProviderEventCallback<ProviderMessage> | Web3ProviderEventCallback<T>): void;
+    removeListener(type: "connect", listener: Web3Eip1193ProviderEventCallback<ProviderConnectInfo>): void;
+    removeListener(type: "chainChanged", listener: Web3Eip1193ProviderEventCallback<string>): void;
+    removeListener(type: "accountsChanged", listener: Web3Eip1193ProviderEventCallback<string[]>): void;
+    once(type: "disconnect", listener: Web3Eip1193ProviderEventCallback<ProviderRpcError>): void;
+    once<T = JsonRpcResult>(type: string, listener: Web3Eip1193ProviderEventCallback<ProviderMessage> | Web3ProviderEventCallback<T>): void;
+    once(type: "connect", listener: Web3Eip1193ProviderEventCallback<ProviderConnectInfo>): void;
+    once(type: "chainChanged", listener: Web3Eip1193ProviderEventCallback<string>): void;
+    once(type: "accountsChanged", listener: Web3Eip1193ProviderEventCallback<string[]>): void;
+    removeAllListeners?(type: string): void;
+    connect(): void;
+    disconnect(code?: number | undefined, data?: string | undefined): void;
+    reset(): void;
+}
