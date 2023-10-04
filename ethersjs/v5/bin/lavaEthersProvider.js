@@ -23,46 +23,46 @@ function getLowerCase(value) {
 }
 class LavaEthersProvider extends BaseProvider {
     constructor(options) {
-        const networkPromise = LavaEthersProvider.getNetworkPromise(options);
-        super(networkPromise);
-        this.lavaSDK = null;
-        (() => __awaiter(this, void 0, void 0, function* () {
-            this.lavaSDK = yield new lava_sdk_1.LavaSDK({
-                privateKey: options.privKey,
-                chainID: options.chainID,
-                pairingListConfig: options.pairingListConfig,
-                geolocation: options.geolocation,
-                lavaChainId: options.lavaChainId,
-            });
-        }))();
+        super(LavaEthersProvider.getNetworkPromise(options));
+        this.lavaSdkOptions = options;
     }
     static getNetworkPromise(options) {
         return __awaiter(this, void 0, void 0, function* () {
             if (options.networkId) {
                 const network = (0, networks_1.getNetwork)({
-                    name: options.chainID,
+                    name: options.chainId,
                     chainId: options.networkId,
-                });
-                return Promise.resolve(network);
-            }
-            else {
-                const lavaSDK = yield new lava_sdk_1.LavaSDK({
-                    privateKey: options.privKey,
-                    chainID: options.chainID,
-                    pairingListConfig: options.pairingListConfig,
-                    geolocation: options.geolocation,
-                });
-                const response = yield lavaSDK.sendRelay({
-                    method: "eth_chainId",
-                    params: [],
-                });
-                const networkId = parseInt(JSON.parse(response).result, 16);
-                const network = (0, networks_1.getNetwork)({
-                    name: options.chainID,
-                    chainId: networkId,
                 });
                 return network;
             }
+            const lavaSDK = yield this.createLavaSDK(options);
+            const response = yield lavaSDK.sendRelay({
+                method: "eth_chainId",
+                params: [],
+            });
+            const networkId = parseInt(JSON.parse(response).result, 16);
+            const network = (0, networks_1.getNetwork)({
+                name: options.chainId,
+                chainId: networkId,
+            });
+            return network;
+        });
+    }
+    static createLavaSDK(options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return lava_sdk_1.LavaSDK.create(Object.assign(Object.assign({}, options), { chainIds: options.chainId }));
+        });
+    }
+    static create(options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const provider = new LavaEthersProvider(options);
+            yield provider.init();
+            return provider;
+        });
+    }
+    init() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.lavaSdk = yield LavaEthersProvider.createLavaSDK(this.lavaSdkOptions);
         });
     }
     perform(method, params) {
@@ -149,12 +149,12 @@ class LavaEthersProvider extends BaseProvider {
     fetch(method, params) {
         return __awaiter(this, void 0, void 0, function* () {
             // make sure lavaSDK was initialized
-            if (this.lavaSDK == null) {
+            if (this.lavaSdk == null) {
                 throw new Error("Lava SDK not initialized");
             }
             // send relay using lavaSDK
             try {
-                const response = yield this.lavaSDK.sendRelay({
+                const response = yield this.lavaSdk.sendRelay({
                     method: method,
                     params: params,
                 });
@@ -177,7 +177,7 @@ class LavaEthersProvider extends BaseProvider {
     }
     getTransactionPostData(transaction) {
         const result = {};
-        for (let key in transaction) {
+        for (const key in transaction) {
             if (transaction[key] == null) {
                 continue;
             }
