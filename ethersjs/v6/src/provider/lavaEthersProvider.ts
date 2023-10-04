@@ -49,7 +49,7 @@ export class LavaEthersProvider extends AbstractProvider {
         params: [],
       });
 
-      this.lavaSdkOptions.networkId = JSON.parse(response).result as number;
+      this.lavaSdkOptions.networkId = response.result as number;
     }
 
     this.network = new Network(
@@ -184,16 +184,13 @@ export class LavaEthersProvider extends AbstractProvider {
         params: params,
       });
 
-      // parse response
-      const parsedResponse = JSON.parse(response);
-
       // return result
-      if (parsedResponse.result != undefined) {
-        return parsedResponse.result;
+      if (response.result != undefined) {
+        return response.result;
       }
 
-      if (parsedResponse.error.message != undefined) {
-        throw new Error(parsedResponse.error.message);
+      if (response.error.message != undefined) {
+        throw new Error(response.error.message);
       }
 
       // Log response if we are not handling it

@@ -183,7 +183,7 @@ export class LavaEthersProvider extends BaseProvider {
       });
 
       // parse response
-      const parsedResponse = JSON.parse(response);
+      const parsedResponse = response;
 
       // return result
       if (parsedResponse.result != undefined) {
