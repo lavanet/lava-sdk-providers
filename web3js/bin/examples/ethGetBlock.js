@@ -29,21 +29,19 @@ function createWeb3Instance(options) {
         return new web3_1.default(provider);
     });
 }
-createWeb3Instance({
-    privateKey: process.env.PRIVATE_KEY,
-    chainIds: "ETH1",
-    geolocation: "1",
-    pairingListConfig: process.env.PAIRING_LIST_CONFIG_PATH,
-    lavaChainId: "lava",
-    logLevel: "info",
-    allowInsecureTransport: true,
-})
-    .then((web3) => {
-    return web3.eth.getBlock();
-})
-    .then((block) => {
-    console.log(block);
-})
-    .catch((err) => {
-    console.error(err);
-});
+function printLatestBlock() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const web3 = yield createWeb3Instance({
+            privateKey: process.env.PRIVATE_KEY,
+            chainIds: "ETH1",
+            geolocation: "1",
+            pairingListConfig: process.env.PAIRING_LIST_CONFIG_PATH,
+            lavaChainId: "lava",
+            logLevel: "info",
+            allowInsecureTransport: true,
+        });
+        const latestBlock = yield web3.eth.getBlock();
+        console.log(latestBlock);
+    });
+}
+(() => __awaiter(void 0, void 0, void 0, function* () { return yield printLatestBlock(); }))();

@@ -19,21 +19,20 @@ async function createWeb3Instance(options: LavaSDKOptions): Promise<Web3> {
   return new Web3(provider);
 }
 
-createWeb3Instance({
-  privateKey: process.env.PRIVATE_KEY,
-  chainIds: "ETH1",
-  geolocation: "1",
-  pairingListConfig: process.env.PAIRING_LIST_CONFIG_PATH,
-  lavaChainId: "lava",
-  logLevel: "info",
-  allowInsecureTransport: true,
-})
-  .then((web3) => {
-    return web3.eth.getBlock();
-  })
-  .then((block) => {
-    console.log(block);
-  })
-  .catch((err) => {
-    console.error(err);
+async function printLatestBlock() {
+  const web3 = await createWeb3Instance({
+    privateKey: process.env.PRIVATE_KEY,
+    chainIds: "ETH1",
+    geolocation: "1",
+    pairingListConfig: process.env.PAIRING_LIST_CONFIG_PATH,
+    lavaChainId: "lava",
+    logLevel: "info",
+    allowInsecureTransport: true,
   });
+
+  const latestBlock = await web3.eth.getBlock();
+
+  console.log(latestBlock);
+}
+
+(async (): Promise<void> => await printLatestBlock())();
