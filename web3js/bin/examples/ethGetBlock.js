@@ -13,11 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const web3_1 = __importDefault(require("web3"));
-const lavaWeb3jsProvider_1 = require("../src/lavaWeb3jsProvider");
+const lavaWeb3Provider_1 = require("../src/lavaWeb3Provider");
 function createWeb3Instance(options) {
     return __awaiter(this, void 0, void 0, function* () {
         // ## Options A: ##
-        const provider = yield lavaWeb3jsProvider_1.LavaWeb3Provider.create(options);
+        const provider = yield lavaWeb3Provider_1.LavaWeb3Provider.create(options);
         // ## Options B: ##
         // const provider = new LavaWeb3Provider(options);
         // await provider.init();

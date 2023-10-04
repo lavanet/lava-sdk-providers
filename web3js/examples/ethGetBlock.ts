@@ -1,7 +1,7 @@
 import { LavaSDKOptions } from "@lavanet/lava-sdk";
 import Web3 from "web3";
 
-import { LavaWeb3Provider } from "../src/lavaWeb3jsProvider";
+import { LavaWeb3Provider } from "../src/lavaWeb3Provider";
 
 async function createWeb3Instance(options: LavaSDKOptions): Promise<Web3> {
   // ## Options A: ##
