@@ -1,0 +1,25 @@
+{
+  "name": "lava_web3_provider",
+  "version": "1.0.0",
+  "description": "Lava extension for web3js library",
+  "main": "./bin/src/index.js",
+  "author": "Lava Protocol Inc",
+  "license": "Apache-2.0",
+  "scripts": {
+    "tsc": "tsc",
+    "build": "yarn tsc",
+    "prettier": "prettier --check .",
+    "lint": "eslint '**/*.ts'"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.1.0",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@lavanet/lava-sdk": "0.24.6",
+    "web3": "^4.1.2"
+  }
+}

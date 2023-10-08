@@ -23,8 +23,8 @@ The Lava-SDK-providers is currently in the Alpha stage and is not production-rea
 Roadmap highlights:
 
 1. Implement ethers.js provider ✅
-2. Implement cosmosJS provider
-3. Implement web3.js provider
+2. Implement web3.js provider ✅
+3. Implement cosmosJS provider
 
 <!-- Prerequisites -->
 
@@ -65,6 +65,7 @@ npm install @lavanet/lava-sdk-providers
 For each provider implementation, there is a separate readme file on how to use it. Below are the available provider implementations along with a link to their respective readme file:
 
 1. [Ethers.js](https://github.com/lavanet/lava-sdk-providers/blob/main/ethersjs/README.md)
+2. [Web3js](https://github.com/lavanet/lava-sdk-providers/blob/main/web3js/README.md)
 
 Make sure to follow the instructions in the respective readme file to properly configure and use the provider implementation.
 
