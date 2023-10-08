@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <img src="https://user-images.githubusercontent.com/2770565/223762290-44afc792-8ad4-4dbb-b2c2-532780d6c5de.png" alt="Logo" width="80" height="80">
-  <h3 align="center">Lava Ethers Provider - <i>ALPHA</i></h3>
+  <h3 align="center">Lava Web3.js Provider - <i>ALPHA</i></h3>
   </p>
 </div>
 

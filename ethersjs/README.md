@@ -121,3 +121,71 @@ const blockNumber = await ethersProvider.getBlockNumber();
 This will return the block number of the latest block on the specified chain. You can find more information on available methods in the official [Ether.js documentation](https://docs.ethers.org/v5/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- Troubleshooting -->
+
+# Troubleshooting
+
+### <b> Webpack >= 5 </b>
+
+If you are using `create-react-app` version 5 or higher, or `Angular` version 11 or higher, you may encounter build issues. This is because these versions use `webpack version 5`, which does not include Node.js polyfills.
+
+#### <b> Create-react-app solution </b>
+
+1. Install react-app-rewired and the missing modules:
+
+```bash
+yarn add --dev react-app-rewired crypto-browserify stream-browserify browserify-zlib assert stream-http https-browserify os-browserify url buffer process net tls bufferutil utf-8-validate path-browserify
+```
+
+2. Create `config-overrides.js` in the root of your project folder
+
+```javascript
+const webpack = require("webpack");
+
+module.exports = function override(config) {
+  const fallback = config.resolve.fallback || {};
+  Object.assign(fallback, {
+    crypto: require.resolve("crypto-browserify"),
+    stream: require.resolve("stream-browserify"),
+    assert: require.resolve("assert"),
+    http: require.resolve("stream-http"),
+    https: require.resolve("https-browserify"),
+    os: require.resolve("os-browserify"),
+    url: require.resolve("url"),
+    zlib: require.resolve("browserify-zlib"),
+    fs: false,
+    bufferutil: require.resolve("bufferutil"),
+    "utf-8-validate": require.resolve("utf-8-validate"),
+    path: require.resolve("path-browserify"),
+  });
+  config.resolve.fallback = fallback;
+  config.plugins = (config.plugins || []).concat([
+    new webpack.ProvidePlugin({
+      process: "process/browser",
+      Buffer: ["buffer", "Buffer"],
+    }),
+  ]);
+  config.ignoreWarnings = [/Failed to parse source map/];
+  config.module.rules.push({
+    test: /\.(js|mjs|jsx)$/,
+    enforce: "pre",
+    loader: require.resolve("source-map-loader"),
+    resolve: {
+      fullySpecified: false,
+    },
+  });
+  return config;
+};
+```
+
+3. In the `package.json` change the script for start, test, build and eject:
+
+```JSON
+"scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+},
+```
