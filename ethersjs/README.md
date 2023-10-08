@@ -54,30 +54,57 @@ The LavaEthersProvider supports multiple versions. We support version 5.x and th
 
 ```typescript
 Copy code
-import { LavaEthersProvider } from "lava-sdk-provider"; // for version 6 (default)
 import { LavaEthersProvider } from "lava-sdk-provider/ethers/v5"; // for version 5
 import { LavaEthersProvider } from "lava-sdk-provider/ethers/v6"; // for version 6
 ```
-
-By default, version 6 is imported, but you can specify which one you want to add.
 
 ### Initializing the LavaEthersProvider
 
 To use the LavaEthersProvider, you will first need to initialize it.
 
 ```typescript
-const ethersProvider = await new LavaEthersProvider({
-  privKey: privKey,
-  chainID: chainID,
+// Use init()
+const ethersProvider = new LavaEthersProvider({
+  privateKey: privateKey,
+  chainId: chainId,
   pairingListConfig: localConfigPath, // Optional
-  networkId: networkID, // Optional
+  networkId: networkId, // Optional
+  geolocation: geolocation, //Optional
+});
+
+await ethersProvider.init();
+```
+
+or 
+
+```typescript
+// Use create()
+const ethersProvider = await LavaEthersProvider.create({
+  privateKey: privateKey,
+  chainId: chainId,
+  pairingListConfig: localConfigPath, // Optional
+  networkId: networkId, // Optional
+  geolocation: geolocation, //Optional
+});
+```
+
+or 
+
+```typescript
+// Lazy init: 
+//  * The init() will be called automatically on first request
+const ethersProvider = new LavaEthersProvider({
+  privateKey: privateKey,
+  chainId: chainId,
+  pairingListConfig: localConfigPath, // Optional
+  networkId: networkId, // Optional
   geolocation: geolocation, //Optional
 });
 ```
 
 - `privateKey` parameter is required and should be the private key of the staked Lava client for the specified `chainID`.
 
-- `chainID` parameter is required and should be the ID of the chain you want to query. You can find all supported chains with their IDs [supportedChains](https://github.com/lavanet/lava-sdk-providers/blob/main/ethersjs/supportedChains.json)
+- `chainId` parameter is required and should be the ID of the chain you want to query. You can find all supported chains with their IDs [supportedChains](https://github.com/lavanet/lava-sdk-providers/blob/main/ethersjs/supportedChains.json)
 
 - `pairingListConfig` is an optional field that specifies the lava pairing list config used for communicating with lava network. Lava SDK does not rely on one centralized rpc for querying lava network. It uses a list of rpc providers to fetch list of the providers for specified `chainID` and `rpcInterface` from lava network. If not pairingListConfig set, the default list will be used [default lava pairing list](https://github.com/lavanet/lava-providers/blob/main/pairingList.json)
 

@@ -11,17 +11,8 @@ import {
   PerformActionRequest,
   TransactionRequest,
   JsonRpcTransactionRequest,
-} from "ethers/types/providers";
-import { LavaSDK } from "@lavanet/lava-sdk";
-
-interface SendRelayOptions {
-  chainID: string;
-  privKey: string;
-  pairingListConfig?: string;
-  networkId?: number;
-  geolocation?: string;
-  lavaChainId?: string;
-}
+} from "ethers";
+import { LavaSDK, LavaSDKOptions } from "@lavanet/lava-sdk";
 
 function getLowerCase(value: string): string {
   if (value) {
@@ -30,42 +21,57 @@ function getLowerCase(value: string): string {
   return value;
 }
 
+export interface EthersLavaSDKOptions extends Omit<LavaSDKOptions, "chainIds"> {
+  chainId: string;
+  networkId?: number;
+}
+
 export class LavaEthersProvider extends AbstractProvider {
-  private lavaSDK: LavaSDK | null;
-  private network: Network | null;
+  private lavaSdk: LavaSDK | undefined;
+  private network: Network | undefined;
+  private lavaSdkOptions: EthersLavaSDKOptions;
 
-  constructor(options: SendRelayOptions) {
+  constructor(options: EthersLavaSDKOptions) {
     super();
+    this.lavaSdkOptions = options;
+  }
 
-    this.network = null;
-    this.lavaSDK = null;
+  async init() {
+    this.lavaSdk = await LavaSDK.create({
+      ...this.lavaSdkOptions,
+      chainIds: this.lavaSdkOptions.chainId,
+    });
 
-    return (async (): Promise<LavaEthersProvider> => {
-      this.lavaSDK = await new LavaSDK({
-        privateKey: options.privKey,
-        chainID: options.chainID,
-        pairingListConfig: options.pairingListConfig,
-        geolocation: options.geolocation,
-        lavaChainId: options.lavaChainId,
+    if (this.lavaSdkOptions.networkId == undefined) {
+      // fetch chain id from the provider
+      const response = await this.lavaSdk.sendRelay({
+        method: "eth_chainId",
+        params: [],
       });
 
-      if (options.networkId == undefined) {
-        // fetch chain id from the provider
-        const response = await this.lavaSDK.sendRelay({
-          method: "eth_chainId",
-          params: [],
-        });
+      this.lavaSdkOptions.networkId = response.result as number;
+    }
 
-        options.networkId = JSON.parse(response).result as number;
-      }
+    this.network = new Network(
+      this.lavaSdkOptions.chainId,
+      this.lavaSdkOptions.networkId
+    );
+  }
 
-      this.network = new Network(options.chainID, options.networkId);
-
-      return this;
-    })() as unknown as LavaEthersProvider;
+  static async create(
+    options: EthersLavaSDKOptions
+  ): Promise<LavaEthersProvider> {
+    const provider = new LavaEthersProvider(options);
+    await provider.init();
+    return provider;
   }
 
   async _perform(req: PerformActionRequest): Promise<any> {
+    if (!this.lavaSdk) {
+      console.log("Lava SDK not initialized, initiating now");
+      await this.init();
+    }
+
     switch (req.method) {
       case "getBlockNumber": {
         return this.fetch("eth_blockNumber", []);
@@ -167,27 +173,24 @@ export class LavaEthersProvider extends AbstractProvider {
 
   async fetch(method: string, params: Array<any>): Promise<any> {
     // make sure lavaSDK was initialized
-    if (this.lavaSDK == null) {
+    if (this.lavaSdk == null) {
       throw new Error("Lava SDK not initialized");
     }
 
     // send relay using lavaSDK
     try {
-      const response = await this.lavaSDK.sendRelay({
+      const response = await this.lavaSdk.sendRelay({
         method: method,
         params: params,
       });
 
-      // parse response
-      const parsedResponse = JSON.parse(response);
-
       // return result
-      if (parsedResponse.result != undefined) {
-        return parsedResponse.result;
+      if (response.result != undefined) {
+        return response.result;
       }
 
-      if (parsedResponse.error.message != undefined) {
-        throw new Error(parsedResponse.error.message);
+      if (response.error.message != undefined) {
+        throw new Error(response.error.message);
       }
 
       // Log response if we are not handling it

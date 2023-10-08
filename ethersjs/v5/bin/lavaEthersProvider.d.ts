@@ -2,18 +2,19 @@ import { providers } from "ethers-v5";
 import { Network } from "@ethersproject/networks";
 import { TransactionRequest } from "@ethersproject/abstract-provider";
 declare const BaseProvider: typeof providers.BaseProvider;
-interface SendRelayOptions {
-    chainID: string;
-    privKey: string;
-    pairingListConfig?: string;
+import { LavaSDKOptions } from "@lavanet/lava-sdk";
+export interface EthersLavaSDKOptions extends Omit<LavaSDKOptions, "chainIds"> {
+    chainId: string;
     networkId?: number;
-    geolocation?: string;
-    lavaChainId?: string;
 }
 export declare class LavaEthersProvider extends BaseProvider {
-    private lavaSDK;
-    constructor(options: SendRelayOptions);
+    private lavaSdk;
+    private lavaSdkOptions;
+    constructor(options: EthersLavaSDKOptions);
     private static getNetworkPromise;
+    private static createLavaSDK;
+    static create(options: EthersLavaSDKOptions): Promise<LavaEthersProvider>;
+    init(): Promise<void>;
     perform(method: string, params: any): Promise<any>;
     fetch(method: string, params: Array<any>): Promise<any>;
     getTransactionPostData(transaction: TransactionRequest): Record<string, string>;

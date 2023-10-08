@@ -13,8 +13,8 @@
     "lint": "eslint '**/*.ts'"
   },
   "dependencies": {
-    "@lavanet/lava-sdk": "0.10.2",
-    "ethers": "^6.1.0"
+    "@lavanet/lava-sdk": "0.24.6",
+    "ethers": "^6.7.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.0.0",
