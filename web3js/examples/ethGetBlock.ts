@@ -19,6 +19,8 @@ async function createWeb3Instance(options: LavaSDKOptions): Promise<Web3> {
   return new Web3(provider);
 }
 
+// backend usage with a private key
+// can be generated for free on gateway.lavanet.xyz
 async function printLatestBlock() {
   const web3 = await createWeb3Instance({
     privateKey: process.env.PRIVATE_KEY,
@@ -35,4 +37,24 @@ async function printLatestBlock() {
   console.log(latestBlock);
 }
 
-(async (): Promise<void> => await printLatestBlock())();
+async function printLatestBlockWithBadges() {
+  const web3 = await createWeb3Instance({
+    badge: {
+      badgeServerAddress: "https://badges.lavanet.xyz", // Or your own Badge-Server URL
+      projectId: "//", // Get your Own on gateway.lavanet.xyz
+    },
+    chainIds: "ETH1",
+    logLevel: "info",
+    geolocation: "2", // put your geolocation
+  });
+
+  const latestBlock = await web3.eth.getBlock();
+
+  console.log(latestBlock);
+}
+try {
+  console.log("starting with badges decentralised access");
+  (async (): Promise<void> => await printLatestBlockWithBadges())();
+} catch (e) {
+  (async (): Promise<void> => await printLatestBlock())();
+}

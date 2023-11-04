@@ -29,6 +29,8 @@ function createWeb3Instance(options) {
         return new web3_1.default(provider);
     });
 }
+// backend usage with a private key
+// can be generated for free on gateway.lavanet.xyz
 function printLatestBlock() {
     return __awaiter(this, void 0, void 0, function* () {
         const web3 = yield createWeb3Instance({
@@ -44,4 +46,25 @@ function printLatestBlock() {
         console.log(latestBlock);
     });
 }
-(() => __awaiter(void 0, void 0, void 0, function* () { return yield printLatestBlock(); }))();
+function printLatestBlockWithBadges() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const web3 = yield createWeb3Instance({
+            badge: {
+                badgeServerAddress: "https://badges.lavanet.xyz",
+                projectId: "fb82ca7244b90fde0c4baff0049fafa9",
+            },
+            chainIds: "ETH1",
+            logLevel: "info",
+            geolocation: "2",
+        });
+        const latestBlock = yield web3.eth.getBlock();
+        console.log(latestBlock);
+    });
+}
+try {
+    console.log("starting");
+    (() => __awaiter(void 0, void 0, void 0, function* () { return yield printLatestBlockWithBadges(); }))();
+}
+catch (e) {
+    // (async (): Promise<void> => await printLatestBlock())();
+}
