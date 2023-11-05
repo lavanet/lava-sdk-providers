@@ -7,11 +7,6 @@ const { hexlify, hexValue, accessListify } = utils;
 
 import { LavaSDK, LavaSDKOptions } from "@lavanet/lava-sdk";
 
-export interface EthersLavaSDKOptions extends Omit<LavaSDKOptions, "chainIds"> {
-  chainId: string;
-  networkId?: number;
-}
-
 function getLowerCase(value: string): string {
   if (value) {
     return value.toLowerCase();

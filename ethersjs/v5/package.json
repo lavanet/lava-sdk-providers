@@ -2,7 +2,7 @@
   "name": "@lavanet/lava-ethers-v5",
   "version": "0.26.1",
   "description": "Lava implementation of ether.js provider",
-  "main": "./bin/src/index.js",
+  "main": "./bin/src/lavaEthersProvider.js",
   "author": "Lava Protocol Inc",
   "license": "Apache-2.0",
   "scripts": {

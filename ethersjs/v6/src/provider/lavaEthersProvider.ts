@@ -21,47 +21,47 @@ function getLowerCase(value: string): string {
   return value;
 }
 
-export interface EthersLavaSDKOptions extends Omit<LavaSDKOptions, "chainIds"> {
-  chainId: string;
-  networkId?: number;
-}
-
 export class LavaEthersProvider extends AbstractProvider {
   private lavaSdk: LavaSDK | undefined;
   private network: Network | undefined;
-  private lavaSdkOptions: EthersLavaSDKOptions;
+  private lavaSdkOptions: LavaSDKOptions;
+  private networkId: number | undefined
 
-  constructor(options: EthersLavaSDKOptions) {
+  constructor(options: LavaSDKOptions, networkId?: number) {
     super();
     this.lavaSdkOptions = options;
+    this.networkId = networkId
   }
 
   async init() {
-    this.lavaSdk = await LavaSDK.create({
-      ...this.lavaSdkOptions,
-      chainIds: this.lavaSdkOptions.chainId,
-    });
+    const chainId = this.lavaSdkOptions.chainIds
+    if (chainId instanceof Array) {
+      throw "lavad-sdk ethers integration supports one chain at a time"
+    }
+    this.lavaSdk = await LavaSDK.create(
+      this.lavaSdkOptions,  
+    );
 
-    if (this.lavaSdkOptions.networkId == undefined) {
+    if (this.networkId == undefined) {
       // fetch chain id from the provider
       const response = await this.lavaSdk.sendRelay({
         method: "eth_chainId",
         params: [],
       });
 
-      this.lavaSdkOptions.networkId = response.result as number;
+      this.networkId = response.result as number;
     }
 
     this.network = new Network(
-      this.lavaSdkOptions.chainId,
-      this.lavaSdkOptions.networkId
+      chainId,
+      this.networkId
     );
   }
 
   static async create(
-    options: EthersLavaSDKOptions
+    options: LavaSDKOptions, networkId?: number
   ): Promise<LavaEthersProvider> {
-    const provider = new LavaEthersProvider(options);
+    const provider = new LavaEthersProvider(options,networkId);
     await provider.init();
     return provider;
   }
