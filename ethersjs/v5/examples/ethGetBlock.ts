@@ -1,13 +1,12 @@
-import {
-  EthersLavaSDKOptions,
-  LavaEthersProvider,
-} from "../src/provider/lavaEthersProvider";
+import { LavaSDKOptions } from "@lavanet/lava-sdk";
+import { LavaEthersProvider } from "../src/provider/lavaEthersProvider";
 
 async function createEthersLavaProvider(
-  options: EthersLavaSDKOptions
+  options: LavaSDKOptions,
+  networkId?: number
 ): Promise<LavaEthersProvider> {
   // ## Options A: ##
-  const provider = await LavaEthersProvider.create(options);
+  const provider = await LavaEthersProvider.create(options, networkId);
 
   // ## Options B: ##
   // const provider = new LavaEthersProvider(options);
@@ -21,21 +20,45 @@ async function createEthersLavaProvider(
   return provider;
 }
 
-async function printLatestBlock() {
-  const ethersProvider = await createEthersLavaProvider({
-    privateKey: process.env.PRIVATE_KEY,
-    chainId: "ETH1",
-    networkId: 1,
-    geolocation: "1",
-    pairingListConfig: process.env.PAIRING_LIST_CONFIG_PATH,
-    lavaChainId: "lava",
-    logLevel: "info",
-    allowInsecureTransport: true,
-  });
+async function printLatestBlockWithBadges() {
+  const ethersProvider = await createEthersLavaProvider(
+    {
+      badge: {
+        badgeServerAddress: "https://badges.lavanet.xyz", // Or your own Badge-Server URL
+        projectId: "//", // Get your Own on gateway.lavanet.xyz
+      },
+      chainIds: "ETH1",
+      geolocation: "1",
+      logLevel: "info",
+    },
+    1
+  );
 
   const latestBlock = await ethersProvider.getBlock("latest");
 
   console.log(latestBlock);
 }
 
-(async (): Promise<void> => await printLatestBlock())();
+async function printLatestBlock() {
+  const ethersProvider = await createEthersLavaProvider(
+    {
+      privateKey: process.env.PRIVATE_KEY,
+      chainIds: "ETH1",
+      geolocation: "1",
+      pairingListConfig: process.env.PAIRING_LIST_CONFIG_PATH,
+      lavaChainId: "lava",
+      logLevel: "info",
+      allowInsecureTransport: true,
+    },
+    1
+  );
+
+  const latestBlock = await ethersProvider.getBlock("latest");
+
+  console.log(latestBlock);
+}
+try {
+  (async (): Promise<void> => await printLatestBlockWithBadges())();
+} catch (e) {
+  (async (): Promise<void> => await printLatestBlock())();
+}

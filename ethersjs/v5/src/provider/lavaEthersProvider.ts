@@ -21,20 +21,25 @@ function getLowerCase(value: string): string {
 
 export class LavaEthersProvider extends BaseProvider {
   private lavaSdk: LavaSDK | undefined;
-  private lavaSdkOptions: EthersLavaSDKOptions;
+  private lavaSdkOptions: LavaSDKOptions;
 
-  constructor(options: EthersLavaSDKOptions) {
-    super(LavaEthersProvider.getNetworkPromise(options));
+  constructor(options: LavaSDKOptions, networkId?: number) {
+    super(LavaEthersProvider.getNetworkPromise(options, networkId));
     this.lavaSdkOptions = options;
   }
 
   private static async getNetworkPromise(
-    options: EthersLavaSDKOptions
+    options: LavaSDKOptions,
+    networkId?: number
   ): Promise<Network> {
-    if (options.networkId) {
+    const chainIds = options.chainIds;
+    if (chainIds instanceof Array) {
+      throw "etheres integration supports one chain per instance";
+    }
+    if (networkId) {
       const network = getNetwork({
-        name: options.chainId,
-        chainId: options.networkId,
+        name: chainIds,
+        chainId: networkId,
       });
       return network;
     }
@@ -45,27 +50,25 @@ export class LavaEthersProvider extends BaseProvider {
       params: [],
     });
 
-    const networkId = parseInt(JSON.parse(response).result, 16);
+    const parsedNetworkId = parseInt(JSON.parse(response).result, 16);
     const network = getNetwork({
-      name: options.chainId,
-      chainId: networkId,
+      name: chainIds,
+      chainId: parsedNetworkId,
     });
     return network;
   }
 
   private static async createLavaSDK(
-    options: EthersLavaSDKOptions
+    options: LavaSDKOptions
   ): Promise<LavaSDK> {
-    return LavaSDK.create({
-      ...options,
-      chainIds: options.chainId,
-    });
+    return LavaSDK.create(options);
   }
 
   static async create(
-    options: EthersLavaSDKOptions
+    options: LavaSDKOptions,
+    networkId?: number
   ): Promise<LavaEthersProvider> {
-    const provider = new LavaEthersProvider(options);
+    const provider = new LavaEthersProvider(options, networkId);
     await provider.init();
     return provider;
   }

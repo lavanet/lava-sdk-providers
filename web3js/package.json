@@ -1,6 +1,6 @@
 {
-  "name": "lava_web3_provider",
-  "version": "1.0.0",
+  "name": "@lavanet/lava-web3",
+  "version": "0.26.1",
   "description": "Lava extension for web3js library",
   "main": "./bin/src/lavaWeb3Provider.js",
   "author": "Lava Protocol Inc",
