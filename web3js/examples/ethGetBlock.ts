@@ -19,8 +19,8 @@ async function createWeb3Instance(options: LavaSDKOptions): Promise<Web3> {
   return new Web3(provider);
 }
 
-// backend usage with a private key
-// can be generated for free on gateway.lavanet.xyz
+// backend usage with a subscribed private key
+// A pre subscribed key can be set for free on gateway.lavanet.xyz
 async function printLatestBlock() {
   const web3 = await createWeb3Instance({
     privateKey: process.env.PRIVATE_KEY,

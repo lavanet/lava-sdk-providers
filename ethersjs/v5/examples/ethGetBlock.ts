@@ -31,7 +31,7 @@ async function printLatestBlockWithBadges() {
       geolocation: "1",
       logLevel: "info",
     },
-    1
+    1 // the evm chain id, optional
   );
 
   const latestBlock = await ethersProvider.getBlock("latest");
@@ -50,7 +50,7 @@ async function printLatestBlock() {
       logLevel: "info",
       allowInsecureTransport: true,
     },
-    1
+    1 // the evm chain id, optional
   );
 
   const latestBlock = await ethersProvider.getBlock("latest");

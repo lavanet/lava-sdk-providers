@@ -11,3 +11,5 @@ dist/utils/*
 .idea
 .npmrc
 .vscode
+ethersjs/v5/yarn-error.log
+web3js/yarn-error.log
