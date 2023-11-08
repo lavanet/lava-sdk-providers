@@ -41,15 +41,18 @@ async function printLatestBlockWithBadges() {
 // This example is for local testing.
 // For production usage check the examples in the docs or gateway (change lavaChainId & allowInsecureTransport)
 async function printLatestBlock() {
-  const ethersProvider = await createEthersLavaProvider({
-    privateKey: process.env.PRIVATE_KEY,
-    chainIds: "ETH1",
-    geolocation: "1",
-    pairingListConfig: process.env.PAIRING_LIST_CONFIG_PATH,
-    lavaChainId: "lava",
-    logLevel: "info",
-    allowInsecureTransport: true,
-  });
+  const ethersProvider = await createEthersLavaProvider(
+    {
+      privateKey: process.env.PRIVATE_KEY,
+      chainIds: "ETH1",
+      geolocation: "1",
+      pairingListConfig: process.env.PAIRING_LIST_CONFIG_PATH,
+      lavaChainId: "lava",
+      logLevel: "info",
+      allowInsecureTransport: true,
+    },
+    1 // Optional: The EVM chain ID
+  );
 
   const latestBlock = await ethersProvider.getBlock("latest");
 
