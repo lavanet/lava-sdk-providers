@@ -25,7 +25,7 @@ async function printLatestBlockWithBadges() {
     {
       badge: {
         badgeServerAddress: "https://badges.lavanet.xyz", // Or your own Badge-Server URL
-        projectId: "//", // Get your Own on gateway.lavanet.xyz
+        projectId: "//", // Fetch your project ID from https://gateway.lavanet.xyz
       },
       chainIds: "ETH1",
       geolocation: "1",
@@ -54,6 +54,7 @@ async function printLatestBlock() {
 
   console.log(latestBlock);
 }
+
 try {
   (async (): Promise<void> => await printLatestBlockWithBadges())();
 } catch (e) {
