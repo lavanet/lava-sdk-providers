@@ -45,7 +45,7 @@ async function printLatestBlockWithBadges() {
     },
     chainIds: "ETH1",
     logLevel: "info",
-    geolocation: "2", // put your geolocation
+    geolocation: "2", // Put your geolocation here
   });
 
   const latestBlock = await web3.eth.getBlock();
