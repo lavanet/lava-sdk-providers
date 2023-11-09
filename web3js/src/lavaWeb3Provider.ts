@@ -37,15 +37,7 @@ export class LavaWeb3Provider extends Web3BaseProvider<EthExecutionAPI> {
      * @remarks
      * If init is not called before using the provider, it will be called automatically on the first request
      */
-    this.lavaSdk = await LavaSDK.create({
-      privateKey: this.lavaSdkOptions.privateKey,
-      chainIds: this.lavaSdkOptions.chainIds,
-      geolocation: this.lavaSdkOptions.geolocation,
-      pairingListConfig: this.lavaSdkOptions.pairingListConfig,
-      lavaChainId: this.lavaSdkOptions.lavaChainId,
-      logLevel: this.lavaSdkOptions.logLevel,
-      allowInsecureTransport: this.lavaSdkOptions.allowInsecureTransport,
-    });
+    this.lavaSdk = await LavaSDK.create(this.lavaSdkOptions);
   }
 
   supportsSubscriptions(): boolean {

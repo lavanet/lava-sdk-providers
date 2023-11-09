@@ -1,8 +1,8 @@
 {
-  "name": "lava_cosmjs_rpc_client",
-  "version": "1.0.0",
+  "name": "@lavanet/lava-cosmjs",
+  "version": "0.26.1",
   "description": "Lava extension for cosmjs library",
-  "main": "./bin/src/index.js",
+  "main": "./bin/src/lavaCosmjsRpcClient.js",
   "author": "Lava Protocol Inc",
   "license": "Apache-2.0",
   "scripts": {
@@ -20,6 +20,30 @@
   },
   "dependencies": {
     "@cosmjs/tendermint-rpc": "^0.31.1",
-    "@lavanet/lava-sdk": "0.24.6"
-  }
+    "@lavanet/lava-sdk": "0.26.1"
+  },
+  "bin": {
+    "lavaCosmjsRpcClient": "bin/main.js"
+  },
+  "types": "./bin/src/lavaCosmjsRpcClient.d.ts",
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lavanet/lava-sdk-providers.git"
+  },
+  "keywords": [
+    "Access",
+    "Web3",
+    "APIs",
+    "Lava",
+    "SDK",
+    "Permissionless",
+    "Free",
+    "MultiChain",
+    "Cosmjs",
+    "COSMOS",
+    "COSMOS-SDK"
+  ]
 }

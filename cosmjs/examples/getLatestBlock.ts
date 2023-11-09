@@ -3,7 +3,6 @@ import {
   Tendermint34Client,
   Tendermint37Client,
   TendermintClient,
-  Comet,
 } from "@cosmjs/tendermint-rpc";
 
 import {} from "@cosmjs/tendermint-rpc";
@@ -36,6 +35,20 @@ async function createTendermintClientInstance(
   }
 }
 
+async function printLatestBlockWithBadges(rpcClientName: string) {
+  const tendermingClient = await createTendermintClientInstance(rpcClientName, {
+    badge: {
+      badgeServerAddress: "https://badges.lavanet.xyz", // Or your own Badge-Server URL
+      projectId: "//", // Fetch your project ID from https://gateway.lavanet.xyz
+    },
+    chainIds: "LAV1",
+    geolocation: "1",
+  });
+
+  const latestBlock = await tendermingClient.abciInfo();
+  return latestBlock;
+}
+
 async function printLatestBlock(rpcClientName: string) {
   const tendermingClient = await createTendermintClientInstance(rpcClientName, {
     privateKey: process.env.PRIVATE_KEY,
@@ -54,10 +67,16 @@ async function printLatestBlock(rpcClientName: string) {
 (async (): Promise<void> => {
   const rpcClientNames = ["tendermint34", "tendermint37"];
   rpcClientNames.forEach(async (rpcClientName, _) => {
-    const latestBlock = await printLatestBlock(rpcClientName);
-
-    console.log(`##### Using rpcClient: ${rpcClientName} #####`);
-    console.log(latestBlock);
-    console.log("\n\n");
+    try {
+      const latestBlock = await printLatestBlockWithBadges(rpcClientName);
+      console.log(`##### Using rpcClient: ${rpcClientName} #####`);
+      console.log(latestBlock);
+      console.log("\n\n");
+    } catch (e) {
+      const latestBlock = await printLatestBlock(rpcClientName);
+      console.log(`##### Using rpcClient: ${rpcClientName} #####`);
+      console.log(latestBlock);
+      console.log("\n\n");
+    }
   });
 })();

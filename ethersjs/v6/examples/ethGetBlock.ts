@@ -1,13 +1,12 @@
-import {
-  EthersLavaSDKOptions,
-  LavaEthersProvider,
-} from "../src/provider/lavaEthersProvider";
+import { LavaSDKOptions } from "@lavanet/lava-sdk";
+import { LavaEthersProvider } from "../src/provider/lavaEthersProvider";
 
 async function createEthersLavaProvider(
-  options: EthersLavaSDKOptions
+  options: LavaSDKOptions,
+  networkId?: number
 ): Promise<LavaEthersProvider> {
   // ## Options A: ##
-  const provider = await LavaEthersProvider.create(options);
+  const provider = await LavaEthersProvider.create(options, networkId);
 
   // ## Options B: ##
   // const provider = new LavaEthersProvider(options);
@@ -21,20 +20,47 @@ async function createEthersLavaProvider(
   return provider;
 }
 
+async function printLatestBlockWithBadges() {
+  const ethersProvider = await createEthersLavaProvider(
+    {
+      badge: {
+        badgeServerAddress: "https://badges.lavanet.xyz", // Or your own Badge-Server URL
+        projectId: "//", // Fetch your project ID from https://gateway.lavanet.xyz
+      },
+      chainIds: "ETH1",
+      geolocation: "1",
+      logLevel: "info",
+    },
+    1 // Optional: The EVM chain ID
+  );
+  const latestBlock = await ethersProvider.getBlock("latest");
+  console.log(latestBlock);
+}
+
+// For backend usage with a private key, get your own for free on https://gateway.lavanet.xyz .
+// This example is for local testing.
+// For production usage check the examples in the docs or gateway (change lavaChainId & allowInsecureTransport)
 async function printLatestBlock() {
-  const ethersProvider = await createEthersLavaProvider({
-    privateKey: process.env.PRIVATE_KEY,
-    chainId: "ETH1",
-    geolocation: "1",
-    pairingListConfig: process.env.PAIRING_LIST_CONFIG_PATH,
-    lavaChainId: "lava",
-    logLevel: "info",
-    allowInsecureTransport: true,
-  });
+  const ethersProvider = await createEthersLavaProvider(
+    {
+      privateKey: process.env.PRIVATE_KEY,
+      chainIds: "ETH1",
+      geolocation: "1",
+      pairingListConfig: process.env.PAIRING_LIST_CONFIG_PATH,
+      lavaChainId: "lava",
+      logLevel: "info",
+      allowInsecureTransport: true,
+    },
+    1 // Optional: The EVM chain ID
+  );
 
   const latestBlock = await ethersProvider.getBlock("latest");
 
   console.log(latestBlock);
 }
 
-(async (): Promise<void> => await printLatestBlock())();
+try {
+  (async (): Promise<void> => await printLatestBlockWithBadges())();
+} catch (e) {
+  (async (): Promise<void> => await printLatestBlock())();
+}

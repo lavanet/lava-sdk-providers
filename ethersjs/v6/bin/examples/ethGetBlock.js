@@ -8,32 +8,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const web3_1 = __importDefault(require("web3"));
-const lavaWeb3Provider_1 = require("../src/lavaWeb3Provider");
-function createWeb3Instance(options) {
+const lavaEthersProvider_1 = require("../src/provider/lavaEthersProvider");
+function createEthersLavaProvider(options, networkId) {
     return __awaiter(this, void 0, void 0, function* () {
         // ## Options A: ##
-        const provider = yield lavaWeb3Provider_1.LavaWeb3Provider.create(options);
+        const provider = yield lavaEthersProvider_1.LavaEthersProvider.create(options, networkId);
         // ## Options B: ##
-        // const provider = new LavaWeb3Provider(options);
+        // const provider = new LavaEthersProvider(options);
         // await provider.init();
         //
         //
         // ## Options C: ##
         // # In this case, the provider will be initialized automatically on the first request #
-        // const provider = new LavaWeb3Provider(options);
-        return new web3_1.default(provider);
+        // const provider = new LavaEthersProvider(options);
+        return provider;
     });
 }
-// backend usage with a private key
-// can be generated for free on gateway.lavanet.xyz
+function printLatestBlockWithBadges() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const ethersProvider = yield createEthersLavaProvider({
+            badge: {
+                badgeServerAddress: "https://badges.lavanet.xyz",
+                projectId: "//", // Get your Own on gateway.lavanet.xyz
+            },
+            chainIds: "ETH1",
+            geolocation: "1",
+            logLevel: "info",
+        }, 1);
+        const latestBlock = yield ethersProvider.getBlock("latest");
+        console.log(latestBlock);
+    });
+}
+// for backend usage with a private key, get your own for free on gateway.lavanet.xyz
+// this example is for local testing, for production usage check the examples in the docs or gateway (change lavaChainId & allowInsecureTransport)
 function printLatestBlock() {
     return __awaiter(this, void 0, void 0, function* () {
-        const web3 = yield createWeb3Instance({
+        const ethersProvider = yield createEthersLavaProvider({
             privateKey: process.env.PRIVATE_KEY,
             chainIds: "ETH1",
             geolocation: "1",
@@ -42,29 +53,13 @@ function printLatestBlock() {
             logLevel: "info",
             allowInsecureTransport: true,
         });
-        const latestBlock = yield web3.eth.getBlock();
-        console.log(latestBlock);
-    });
-}
-function printLatestBlockWithBadges() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const web3 = yield createWeb3Instance({
-            badge: {
-                badgeServerAddress: "https://badges.lavanet.xyz",
-                projectId: "fb82ca7244b90fde0c4baff0049fafa9",
-            },
-            chainIds: "ETH1",
-            logLevel: "info",
-            geolocation: "2",
-        });
-        const latestBlock = yield web3.eth.getBlock();
+        const latestBlock = yield ethersProvider.getBlock("latest");
         console.log(latestBlock);
     });
 }
 try {
-    console.log("starting");
     (() => __awaiter(void 0, void 0, void 0, function* () { return yield printLatestBlockWithBadges(); }))();
 }
 catch (e) {
-    // (async (): Promise<void> => await printLatestBlock())();
+    (() => __awaiter(void 0, void 0, void 0, function* () { return yield printLatestBlock(); }))();
 }

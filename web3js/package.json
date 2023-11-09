@@ -1,8 +1,8 @@
 {
-  "name": "lava_web3_provider",
-  "version": "1.0.0",
+  "name": "@lavanet/lava-web3",
+  "version": "0.26.1",
   "description": "Lava extension for web3js library",
-  "main": "./bin/src/index.js",
+  "main": "./bin/src/lavaWeb3Provider.js",
   "author": "Lava Protocol Inc",
   "license": "Apache-2.0",
   "scripts": {
@@ -18,8 +18,29 @@
     "prettier": "^2.8.4",
     "typescript": "^4.9.5"
   },
+  "bin": {
+    "lavaWeb3Provider": "bin/main.js"
+  },
   "dependencies": {
-    "@lavanet/lava-sdk": "0.24.6",
+    "@lavanet/lava-sdk": "0.26.1",
     "web3": "^4.1.2"
-  }
+  },
+  "types": "./bin/src/lavaWeb3Provider.d.ts",
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lavanet/lava-sdk-providers.git"
+  },
+  "keywords": [
+    "Access",
+    "Web3",
+    "APIs",
+    "Lava",
+    "SDK",
+    "Permissionless",
+    "Free",
+    "MultiChain"
+  ]
 }
