@@ -31,14 +31,15 @@ async function printLatestBlockWithBadges() {
       geolocation: "1",
       logLevel: "info",
     },
-    1 // the evm chain id, optional
+    1 // Optional: The EVM chain ID
   );
   const latestBlock = await ethersProvider.getBlock("latest");
   console.log(latestBlock);
 }
 
-// for backend usage with a private key, get your own for free on gateway.lavanet.xyz
-// this example is for local testing, for production usage check the examples in the docs or gateway (change lavaChainId & allowInsecureTransport)
+// For backend usage with a private key, get your own for free on https://gateway.lavanet.xyz .
+// This example is for local testing.
+// For production usage check the examples in the docs or gateway (change lavaChainId & allowInsecureTransport)
 async function printLatestBlock() {
   const ethersProvider = await createEthersLavaProvider({
     privateKey: process.env.PRIVATE_KEY,
