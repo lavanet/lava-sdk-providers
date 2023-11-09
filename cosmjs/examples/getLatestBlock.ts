@@ -39,7 +39,7 @@ async function printLatestBlockWithBadges(rpcClientName: string) {
   const tendermingClient = await createTendermintClientInstance(rpcClientName, {
     badge: {
       badgeServerAddress: "https://badges.lavanet.xyz", // Or your own Badge-Server URL
-      projectId: "//", // Get your Own on gateway.lavanet.xyz
+      projectId: "//", // Fetch your project ID from https://gateway.lavanet.xyz
     },
     chainIds: "LAV1",
     geolocation: "1",
