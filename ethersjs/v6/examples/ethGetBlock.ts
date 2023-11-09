@@ -54,6 +54,7 @@ async function printLatestBlock() {
 
   console.log(latestBlock);
 }
+
 try {
   (async (): Promise<void> => await printLatestBlockWithBadges())();
 } catch (e) {
