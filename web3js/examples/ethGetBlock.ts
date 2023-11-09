@@ -41,7 +41,7 @@ async function printLatestBlockWithBadges() {
   const web3 = await createWeb3Instance({
     badge: {
       badgeServerAddress: "https://badges.lavanet.xyz", // Or your own Badge-Server URL
-      projectId: "//", // Get your Own on gateway.lavanet.xyz
+      projectId: "//", // Fetch your project ID from https://gateway.lavanet.xyz
     },
     chainIds: "ETH1",
     logLevel: "info",
