@@ -52,6 +52,7 @@ async function printLatestBlockWithBadges() {
 
   console.log(latestBlock);
 }
+
 try {
   console.log("starting with badges decentralised access");
   (async (): Promise<void> => await printLatestBlockWithBadges())();
