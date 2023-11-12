@@ -1,0 +1,9 @@
+node_modules
+src/js
+thirdparty_protobufs
+proto
+dist
+bin
+.dccache
+.idea
+.vscode
