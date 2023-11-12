@@ -7,6 +7,7 @@ dist/codec/*
 dist/src/*
 dist/ts/*
 dist/utils/*
+bin
 .dccache
 .idea
 .vscode
