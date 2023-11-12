@@ -1,12 +1,8 @@
-node_modules/*
-src/js/*
-dist/main.js
-thirdparty_protobufs/*
-proto/*
-dist/codec/*
-dist/src/*
-dist/ts/*
-dist/utils/*
+node_modules
+src/js
+thirdparty_protobufs
+proto
+dist
 bin
 .dccache
 .idea
