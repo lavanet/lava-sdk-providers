@@ -1,10 +1,10 @@
 import { LavaSDK, LavaSDKOptions, SendRelayOptions } from "@lavanet/lava-sdk";
-import { createClient, custom } from "viem";
+import { createPublicClient, custom } from "viem";
 
 export async function createViemClientWithLavaSDK(options: LavaSDKOptions) {
   const lava = await LavaSDK.create(options);
 
-  return createClient({
+  return createPublicClient({
     transport: custom({
       async request(options: SendRelayOptions) {
         if (!options.params) {

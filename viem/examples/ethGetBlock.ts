@@ -31,17 +31,13 @@ async function printLatestBlockWithBadges() {
     geolocation: "2", // Put your geolocation here
   });
 
-  const latestBlock = await viem.request({
-    method: "eth_blockNumber",
-  });
+  const latestBlockNumber = await viem.getBlockNumber();
 
-  console.log(latestBlock);
+  console.log(`Latest block number: ${latestBlockNumber}\n`);
 
-  const blockInfo = await viem.request({
-    method: "eth_getBlockByNumber",
-    params: [latestBlock, false],
-  });
+  const blockInfo = await viem.getBlock();
 
+  console.log(`Latest block info:`);
   console.log(blockInfo);
 }
 
