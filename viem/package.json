@@ -1,0 +1,46 @@
+{
+  "name": "@lavanet/lava-viem",
+  "version": "0.26.1",
+  "description": "Lava extension for Viem library",
+  "main": "./bin/src/lavaViemProvider.js",
+  "author": "Lava Protocol Inc",
+  "license": "Apache-2.0",
+  "scripts": {
+    "tsc": "tsc",
+    "build": "yarn tsc",
+    "prettier": "prettier --check .",
+    "lint": "eslint '**/*.ts'"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.1.0",
+    "prettier": "^2.8.4",
+    "typescript": "^5.2.2"
+  },
+  "bin": {
+    "lavaViemProvider": "bin/main.js"
+  },
+  "dependencies": {
+    "@lavanet/lava-sdk": "0.26.1",
+    "viem": "^1.19.0"
+  },
+  "types": "./bin/src/lavaViemProvider.d.ts",
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lavanet/lava-sdk-providers.git"
+  },
+  "keywords": [
+    "Access",
+    "Viem",
+    "APIs",
+    "Lava",
+    "SDK",
+    "Permissionless",
+    "Free",
+    "MultiChain"
+  ]
+}
