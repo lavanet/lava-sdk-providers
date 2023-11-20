@@ -36,6 +36,7 @@
   "keywords": [
     "Access",
     "Web3",
+    "Web3js",
     "APIs",
     "Lava",
     "SDK",
@@ -53,6 +54,6 @@
     "Free",
     "Token",
     "Modular",
-    "Multichain"
+    "MultiChain"
   ]
 }
