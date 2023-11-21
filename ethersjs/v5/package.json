@@ -1,6 +1,6 @@
 {
   "name": "@lavanet/lava-ethers-v5",
-  "version": "0.26.1",
+  "version": "0.27.3",
   "description": "Lava implementation of ether.js provider",
   "main": "./bin/src/lavaEthersProvider.js",
   "author": "Lava Protocol Inc",
@@ -12,7 +12,7 @@
     "lint": "eslint '**/*.ts'"
   },
   "dependencies": {
-    "@lavanet/lava-sdk": "0.26.1",
+    "@lavanet/lava-sdk": "0.27.3",
     "ethers-v5": "npm:ethers@5.7.2"
   },
   "devDependencies": {
@@ -39,8 +39,20 @@
     "APIs",
     "Lava",
     "SDK",
-    "Permissionless",
+    "RPC",
+    "Decentralized",
+    "Blockchain",
+    "Data",
+    "Relay",
+    "Dapp",
+    "Serverless",
+    "Protocol",
+    "JsonRPC",
+    "Tendermint",
+    "Rest",
     "Free",
+    "Token",
+    "Modular",
     "MultiChain",
     "Ethers",
     "Etherjs"

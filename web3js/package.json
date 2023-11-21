@@ -1,6 +1,6 @@
 {
   "name": "@lavanet/lava-web3",
-  "version": "0.26.1",
+  "version": "0.27.3",
   "description": "Lava extension for web3js library",
   "main": "./bin/src/lavaWeb3Provider.js",
   "author": "Lava Protocol Inc",
@@ -22,7 +22,7 @@
     "lavaWeb3Provider": "bin/main.js"
   },
   "dependencies": {
-    "@lavanet/lava-sdk": "0.26.1",
+    "@lavanet/lava-sdk": "0.27.3",
     "web3": "^4.1.2"
   },
   "types": "./bin/src/lavaWeb3Provider.d.ts",
@@ -36,11 +36,24 @@
   "keywords": [
     "Access",
     "Web3",
+    "Web3js",
     "APIs",
     "Lava",
     "SDK",
-    "Permissionless",
+    "RPC",
+    "Decentralized",
+    "Blockchain",
+    "Data",
+    "Relay",
+    "Dapp",
+    "Serverless",
+    "Protocol",
+    "JsonRPC",
+    "Tendermint",
+    "Rest",
     "Free",
+    "Token",
+    "Modular",
     "MultiChain"
   ]
 }
