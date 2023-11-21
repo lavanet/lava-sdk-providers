@@ -1,6 +1,6 @@
 {
   "name": "@lavanet/lava-cosmjs",
-  "version": "0.26.1",
+  "version": "0.27.3",
   "description": "Lava extension for cosmjs library",
   "main": "./bin/src/lavaCosmjsRpcClient.js",
   "author": "Lava Protocol Inc",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@cosmjs/tendermint-rpc": "^0.31.1",
-    "@lavanet/lava-sdk": "0.26.1"
+    "@lavanet/lava-sdk": "0.27.3"
   },
   "bin": {
     "lavaCosmjsRpcClient": "bin/main.js"
@@ -36,11 +36,24 @@
   "keywords": [
     "Access",
     "Web3",
+    "Web3js",
     "APIs",
     "Lava",
     "SDK",
-    "Permissionless",
+    "RPC",
+    "Decentralized",
+    "Blockchain",
+    "Data",
+    "Relay",
+    "Dapp",
+    "Serverless",
+    "Protocol",
+    "JsonRPC",
+    "Tendermint",
+    "Rest",
     "Free",
+    "Token",
+    "Modular",
     "MultiChain",
     "Cosmjs",
     "COSMOS",
