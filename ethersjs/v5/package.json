@@ -1,6 +1,6 @@
 {
   "name": "@lavanet/lava-ethers-v5",
-  "version": "0.27.3",
+  "version": "0.30.3",
   "description": "Lava implementation of ether.js provider",
   "main": "./bin/src/lavaEthersProvider.js",
   "author": "Lava Protocol Inc",
@@ -12,7 +12,7 @@
     "lint": "eslint '**/*.ts'"
   },
   "dependencies": {
-    "@lavanet/lava-sdk": "0.27.3",
+    "@lavanet/lava-sdk": "0.30.3",
     "ethers-v5": "npm:ethers@5.7.2"
   },
   "devDependencies": {
