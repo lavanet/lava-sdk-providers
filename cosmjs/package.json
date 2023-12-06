@@ -1,6 +1,6 @@
 {
   "name": "@lavanet/lava-cosmjs",
-  "version": "0.27.3",
+  "version": "0.30.3",
   "description": "Lava extension for cosmjs library",
   "main": "./bin/src/lavaCosmjsRpcClient.js",
   "author": "Lava Protocol Inc",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@cosmjs/tendermint-rpc": "^0.31.1",
-    "@lavanet/lava-sdk": "0.27.3"
+    "@lavanet/lava-sdk": "0.30.3"
   },
   "bin": {
     "lavaCosmjsRpcClient": "bin/main.js"
