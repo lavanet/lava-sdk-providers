@@ -1,6 +1,6 @@
 {
   "name": "@lavanet/lava-web3",
-  "version": "0.27.3",
+  "version": "0.30.3",
   "description": "Lava extension for web3js library",
   "main": "./bin/src/lavaWeb3Provider.js",
   "author": "Lava Protocol Inc",
@@ -22,7 +22,7 @@
     "lavaWeb3Provider": "bin/main.js"
   },
   "dependencies": {
-    "@lavanet/lava-sdk": "0.27.3",
+    "@lavanet/lava-sdk": "0.30.3",
     "web3": "^4.1.2"
   },
   "types": "./bin/src/lavaWeb3Provider.d.ts",
