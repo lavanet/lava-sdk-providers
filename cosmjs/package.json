@@ -1,8 +1,8 @@
 {
   "name": "@lavanet/lava-cosmjs",
-  "version": "0.30.3",
+  "version": "0.30.6",
   "description": "Lava extension for cosmjs library",
-  "main": "./bin/src/lavaCosmjsRpcClient.js",
+  "main": "./dist/src/lavaCosmjsRpcClient.js",
   "author": "Lava Protocol Inc",
   "license": "Apache-2.0",
   "scripts": {
@@ -22,10 +22,10 @@
     "@cosmjs/tendermint-rpc": "^0.31.1",
     "@lavanet/lava-sdk": "0.30.3"
   },
-  "bin": {
-    "lavaCosmjsRpcClient": "bin/main.js"
+  "dist": {
+    "lavaCosmjsRpcClient": "dist/main.js"
   },
-  "types": "./bin/src/lavaCosmjsRpcClient.d.ts",
+  "types": "./dist/src/lavaCosmjsRpcClient.d.ts",
   "directories": {
     "example": "examples"
   },

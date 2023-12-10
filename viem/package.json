@@ -1,8 +1,8 @@
 {
   "name": "@lavanet/lava-viem",
-  "version": "0.30.3",
+  "version": "0.30.6",
   "description": "Lava extension for Viem library",
-  "main": "./bin/src/lavaViemProvider.js",
+  "main": "./dist/src/lavaViemProvider.js",
   "author": "Lava Protocol Inc",
   "license": "Apache-2.0",
   "scripts": {
@@ -18,14 +18,14 @@
     "prettier": "^2.8.4",
     "typescript": "^5.2.2"
   },
-  "bin": {
-    "lavaViemProvider": "bin/main.js"
+  "dist": {
+    "lavaViemProvider": "dist/main.js"
   },
   "dependencies": {
     "@lavanet/lava-sdk": "0.30.3",
     "viem": "^1.19.0"
   },
-  "types": "./bin/src/lavaViemProvider.d.ts",
+  "types": "./dist/src/lavaViemProvider.d.ts",
   "directories": {
     "example": "examples"
   },
