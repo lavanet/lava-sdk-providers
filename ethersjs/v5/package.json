@@ -1,8 +1,8 @@
 {
   "name": "@lavanet/lava-ethers-v5",
-  "version": "0.30.6",
+  "version": "0.30.8",
   "description": "Lava implementation of ether.js provider",
-  "main": "./dist/src/lavaEthersProvider.js",
+  "main": "./dist/src/provider/lavaEthersProvider.js",
   "author": "Lava Protocol Inc",
   "license": "Apache-2.0",
   "scripts": {
@@ -25,7 +25,7 @@
   "dist": {
     "lavaEthersProvider": "dist/main.js"
   },
-  "types": "./dist/src/lavaEthersProvider.d.ts",
+  "types": "./dist/src/provider/lavaEthersProvider.d.ts",
   "directories": {
     "example": "examples"
   },
