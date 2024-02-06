@@ -1,6 +1,6 @@
 {
   "name": "@lavanet/lava-viem",
-  "version": "0.30.6",
+  "version": "0.33.3",
   "description": "Lava extension for Viem library",
   "main": "./dist/src/lavaViemProvider.js",
   "author": "Lava Protocol Inc",
@@ -22,7 +22,7 @@
     "lavaViemProvider": "dist/main.js"
   },
   "dependencies": {
-    "@lavanet/lava-sdk": "0.30.3",
+    "@lavanet/lava-sdk": "0.33.3",
     "viem": "^1.19.0"
   },
   "types": "./dist/src/lavaViemProvider.d.ts",
