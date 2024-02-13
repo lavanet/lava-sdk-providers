@@ -1,0 +1,12 @@
+name: Update SDK version
+
+on:
+  repository_dispatch:
+    types: [package-version-updated]
+
+jobs:
+  triggered-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print triggered workflow details
+        run: echo "Workflow triggered by ${{ github.actor }} in repo ${{ github.repository }}!"
